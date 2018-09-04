@@ -124,3 +124,6 @@ STATIC_URL = '/static/' #APP内部相对目录
 STATICFILES_DIRS = ( #项目相对目录
 	os.path.join(BASE_DIR, "static"),
 )
+
+#请看leace/urls.py配置
+LOGIN_REDIRECT_URL = '/index/'

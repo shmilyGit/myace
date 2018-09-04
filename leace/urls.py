@@ -21,4 +21,10 @@ from django.views.generic import TemplateView
 urlpatterns = [
     path('admin/', admin.site.urls),
     url(r'^account/', include('account.urls', namespace='account')),
+
+	#登录之后跳转到该页,该页即首页
+    url(r'^index/', TemplateView.as_view(template_name="index.html"), name='index'),
+
+ 	#直接访问IP:port 后边不用加路径, 即http://192.168.5.105:8000就会跳转到login.html
+    url('', TemplateView.as_view(template_name="account/login.html"), name='loginIndex'),
 ]
