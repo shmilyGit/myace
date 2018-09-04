@@ -1,0 +1,11 @@
+0.Django 版本 2.1.1
+
+1.搭建本地SVN服务器,可以参考网页收藏
+
+2.创建项目Project,然后执行一次python manage.py migrate 让基本的默认应用生效
+
+3.创建超级用户 admin/administrator [P17]
+
+4.设置静态文件位置,也就是html页面,JS,CSS,图片等存放的位置 [P35-P37]
+	> 重置管理后台模板 [P40], 后台管理模板位置 [P41]
+
