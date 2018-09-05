@@ -1,4 +1,6 @@
-0.Django 版本 2.1.1
+0.版本 
+	> Django V2.1.1
+	> Ace admin V1.4
 
 1.搭建本地SVN服务器,可以参考网页收藏
 
