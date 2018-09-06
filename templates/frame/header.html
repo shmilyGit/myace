@@ -271,8 +271,10 @@
 					<a data-toggle="dropdown" href="#" class="dropdown-toggle">
 						<img class="nav-user-photo" src="{% static 'assets/images/avatars/user.jpg' %}" alt="Jason's Photo" />
 						<span class="user-info">
-							<small>Welcome,</small>
-							Jason
+							<small>Welcome</small>
+							{% if user.is_authenticated%}
+								{{ user.username }}
+							{% endif %}
 						</span>
 
 						<i class="ace-icon fa fa-caret-down"></i>
@@ -280,16 +282,9 @@
 
 					<ul class="user-menu dropdown-menu-right dropdown-menu dropdown-yellow dropdown-caret dropdown-close">
 						<li>
-							<a href="#">
-								<i class="ace-icon fa fa-cog"></i>
-								Settings
-							</a>
-						</li>
-
-						<li>
 							<a href="profile.html">
 								<i class="ace-icon fa fa-user"></i>
-								Profile
+								个人资料
 							</a>
 						</li>
 
@@ -298,7 +293,7 @@
 						<li>
 							<a href="#">
 								<i class="ace-icon fa fa-power-off"></i>
-								Logout
+								退出
 							</a>
 						</li>
 					</ul>
