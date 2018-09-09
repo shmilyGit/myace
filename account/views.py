@@ -32,6 +32,9 @@ UserModel = get_user_model()
 class ShowIndexPageView(LoginRequiredMixin, TemplateView):
 		template_name = "index.html"
 
+class UserProfileView(LoginRequiredMixin, TemplateView):
+		template_name = "account/user_profile.html"
+
 class SuccessURLAllowedHostsMixin:
     success_url_allowed_hosts = set()
 
@@ -382,6 +385,7 @@ class PasswordResetView(PasswordContextMixin, FormView):
         return super().dispatch(*args, **kwargs)
 
     def form_valid(self, form):
+        print ("==========11")
         opts = {
             'use_https': self.request.is_secure(),
             'token_generator': self.token_generator,
@@ -529,6 +533,7 @@ def password_change_done(request,
     if extra_context is not None:
         context.update(extra_context)
 
+    print ("=======================================1")
     return TemplateResponse(request, template_name, context)
 
 

@@ -14,3 +14,9 @@
 5.配置IP:Port直接访问 及 登录之后的跳转 详看leace/urls.py
 
 6.index.html分块 分成单独的模块
+
+7.编写登录与修改密码功能
+    > 基于函数视图FBV 下函数执行完要跳转的XX模板的话,传参数为 {"post_reset_redirect":"/URI/XX/"}
+    > 基于类视图FCV 下函数执行完要跳转的XX模板的话,传参数为(success_url='/URI/XX/')
+
+8.编写重置密码功能

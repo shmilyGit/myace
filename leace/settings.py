@@ -104,8 +104,8 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/2.0/topics/i18n/
 
-#LANGUAGE_CODE = 'en-us'
-LANGUAGE_CODE = 'zh-hans'
+LANGUAGE_CODE = 'en-us'
+#LANGUAGE_CODE = 'zh-hans'
 
 TIME_ZONE = 'Asia/Shanghai'
 
@@ -127,3 +127,13 @@ STATICFILES_DIRS = ( #项目相对目录
 
 #请看leace/urls.py配置
 LOGIN_REDIRECT_URL = '/index/'
+
+#密码重置时发送邮件使用的,个人理解也可以用在所有需要发邮件的地方
+EMAIL_HOST = 'smtp.qq.com'
+EMAIL_HOST_USER = "643492281@qq.com"
+EMAIL_HOST_PASSWORD = "work??00"
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+DEFAULT_FROM_EAMIL = "718922628@qq.com"
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
