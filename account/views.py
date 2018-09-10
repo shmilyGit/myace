@@ -385,7 +385,6 @@ class PasswordResetView(PasswordContextMixin, FormView):
         return super().dispatch(*args, **kwargs)
 
     def form_valid(self, form):
-        print ("==========11")
         opts = {
             'use_https': self.request.is_secure(),
             'token_generator': self.token_generator,
