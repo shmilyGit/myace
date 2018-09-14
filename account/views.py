@@ -25,15 +25,41 @@ from django.views.decorators.csrf import csrf_protect
 from django.views.decorators.debug import sensitive_post_parameters
 from django.views.generic.base import TemplateView
 from django.views.generic.edit import FormView
+
+##BEGIN: Add by SRJ-SGL 
 from braces.views import LoginRequiredMixin
+from django.http import HttpResponse
+from django.views.generic.edit import CreateView
+from .forms import RegistrationForm
+from django.shortcuts import render, redirect
+##END
 
 UserModel = get_user_model()
 
+##BEGIN: Add by SRJ-SGL 
 class ShowIndexPageView(LoginRequiredMixin, TemplateView):
-		template_name = "index.html"
+    template_name = "index.html"
 
 class UserProfileView(LoginRequiredMixin, TemplateView):
-		template_name = "account/user_profile.html"
+    template_name = "account/user_profile.html"
+    login_url = "/account/login/"
+
+class RegistrationView(CreateView):
+    fields = ['username', 'email']
+    template_name = 'account/registration.html'
+
+    def post(self, request, *args, **kargs):
+        user_form = RegistrationForm(data=request.POST)
+        if user_form.is_valid():
+            new_user = user_form.save(commit=False)
+            new_user.set_password(user_form.cleaned_data['password'])
+            new_user.save()
+            return redirect("account:user_login")
+
+    def get(self, request, *args, **kargs):
+        user_form = RegistrationForm()
+        return render(request, "account/registration.html", {"form":user_form})
+##END
 
 class SuccessURLAllowedHostsMixin:
     success_url_allowed_hosts = set()
@@ -532,7 +558,6 @@ def password_change_done(request,
     if extra_context is not None:
         context.update(extra_context)
 
-    print ("=======================================1")
     return TemplateResponse(request, template_name, context)
 
 

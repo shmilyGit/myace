@@ -117,32 +117,32 @@
 					<div class="space-6"></div>
 					<p> Enter your details to begin: </p>
 
-					<form>
+					<form action="{% url 'account:user_register' %}" method="post">{% csrf_token %}
 						<fieldset>
 							<label class="block clearfix">
 								<span class="block input-icon input-icon-right">
-									<input type="email" class="form-control" placeholder="Email" />
+									<input id="id_email" name="email" type="email" class="form-control" placeholder="Email" />
 									<i class="ace-icon fa fa-envelope"></i>
 								</span>
 							</label>
 
 							<label class="block clearfix">
 								<span class="block input-icon input-icon-right">
-									<input type="text" class="form-control" placeholder="Username" />
+									<input id="id_username" name="username" type="text" class="form-control" placeholder="Username" />
 									<i class="ace-icon fa fa-user"></i>
 								</span>
 							</label>
 
 							<label class="block clearfix">
 								<span class="block input-icon input-icon-right">
-									<input type="password" class="form-control" placeholder="Password" />
+									<input id="id_password" name="password" type="password" class="form-control" placeholder="Password" />
 									<i class="ace-icon fa fa-lock"></i>
 								</span>
 							</label>
 
 							<label class="block clearfix">
 								<span class="block input-icon input-icon-right">
-									<input type="password" class="form-control" placeholder="Repeat password" />
+									<input id="id_password2" name="password2"  type="password" class="form-control" placeholder="Repeat password" />
 									<i class="ace-icon fa fa-retweet"></i>
 								</span>
 							</label>
@@ -163,7 +163,7 @@
 									<span class="bigger-110">Reset</span>
 								</button>
 
-								<button type="button" class="width-65 pull-right btn btn-sm btn-success">
+								<button type="submit" class="width-65 pull-right btn btn-sm btn-success">
 									<span class="bigger-110">Register</span>
 
 									<i class="ace-icon fa fa-arrow-right icon-on-right"></i>
