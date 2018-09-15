@@ -19,7 +19,7 @@ urlpatterns = [
 
     ##密码重置
 	url(r'^password-reset/$', auth_views.PasswordResetView.as_view(
-                                template_name='account/login.html',
+                                template_name='account/password_reset_form.html',
                                 email_template_name='account/password_reset_email.html',
                                 subject_template_name='account/password_reset_subject.txt',
                                 success_url='/account/password-reset-done/'), name="password_reset"),
@@ -47,7 +47,7 @@ urlpatterns = [
     
     ##密码重置
 	#url(r'^password-reset/$', auth_views.password_reset,{
-    #                            "template_name":"account/login.html",
+    #                            "template_name":"account/password_reset_form.html",
     #                            "email_template_name":"account/password_reset_email.html",
     #                            "subject_template_name":"account/password_reset_subject.txt",
     #                            "post_reset_redirect":"/account/password-reset-done/"}, name="password_reset"),

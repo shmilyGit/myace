@@ -24,3 +24,5 @@
     > 如果重置密码的时候,输入的邮箱不存在,好像不会发送邮件
 
 9.注意 Django 国际化,这样就可以避免中英文问题
+
+10. raise ValueError("Error the name is exist.") 可以自定义错误提示,有助于开发

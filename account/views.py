@@ -49,16 +49,19 @@ class RegistrationView(CreateView):
     template_name = 'account/registration.html'
 
     def post(self, request, *args, **kargs):
+        print (request.POST)
         user_form = RegistrationForm(data=request.POST)
         if user_form.is_valid():
             new_user = user_form.save(commit=False)
             new_user.set_password(user_form.cleaned_data['password'])
             new_user.save()
             return redirect("account:user_login")
+        else:
+            return render(request, "account/registration.html", {"form": user_form})
+
 
     def get(self, request, *args, **kargs):
-        user_form = RegistrationForm()
-        return render(request, "account/registration.html", {"form":user_form})
+        return render(request, "account/registration.html")
 ##END
 
 class SuccessURLAllowedHostsMixin:
