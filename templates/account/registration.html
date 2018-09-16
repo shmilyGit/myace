@@ -120,28 +120,28 @@
 						<fieldset>
 							<label class="block clearfix">
 								<span class="block input-icon input-icon-right">
-									<input id="id_email" name="email" type="email" class="form-control" placeholder="Email" />
+									<input id="id_email" name="email" type="email" class="form-control" placeholder="Email" value="{{request.POST.email}}" />
 									<i class="ace-icon fa fa-envelope"></i>
 								</span>
 							</label>
 
 							<label class="block clearfix">
 								<span class="block input-icon input-icon-right">
-									<input id="id_username" name="username" type="text" class="form-control" placeholder="Username" />
+									<input id="id_username" name="username" type="text" class="form-control" placeholder="Username" value="{{request.POST.username}}" />
 									<i class="ace-icon fa fa-user"></i>
 								</span>
 							</label>
 
 							<label class="block clearfix">
 								<span class="block input-icon input-icon-right">
-									<input id="id_password" name="password" type="password" class="form-control" placeholder="Password" />
+									<input id="id_password" name="password" type="password" class="form-control" placeholder="Password" value="{{request.POST.password}}" />
 									<i class="ace-icon fa fa-lock"></i>
 								</span>
 							</label>
 
 							<label class="block clearfix">
 								<span class="block input-icon input-icon-right">
-									<input id="id_password2" name="password2"  type="password" class="form-control" placeholder="Repeat password" />
+									<input id="id_password2" name="password2"  type="password" class="form-control" placeholder="Repeat password" value="{{request.POST.password2}}" />
 									<i class="ace-icon fa fa-retweet"></i>
 								</span>
 							</label>

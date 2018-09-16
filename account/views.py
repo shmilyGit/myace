@@ -48,8 +48,8 @@ class RegistrationView(CreateView):
     fields = ['username', 'email']
     template_name = 'account/registration.html'
 
-    def post(self, request, *args, **kargs):
-        print (request.POST)
+
+    def post(self, request):
         user_form = RegistrationForm(data=request.POST)
         if user_form.is_valid():
             new_user = user_form.save(commit=False)
@@ -60,7 +60,7 @@ class RegistrationView(CreateView):
             return render(request, "account/registration.html", {"form": user_form})
 
 
-    def get(self, request, *args, **kargs):
+    def get(self, request):
         return render(request, "account/registration.html")
 ##END
 
