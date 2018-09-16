@@ -26,3 +26,10 @@
 9.注意 Django 国际化,这样就可以避免中英文问题
 
 10. raise ValueError("Error the name is exist.") 可以自定义错误提示,有助于开发
+
+11. 取参数
+    > Get : vkey = kwargs['key']
+    > Post: vkey = reqest.POST['key']
+
+12. 图片选择
+    > 查看 templetes/test/user_profile.html

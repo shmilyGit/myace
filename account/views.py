@@ -44,10 +44,16 @@ class UserProfileView(LoginRequiredMixin, TemplateView):
     template_name = "account/user_profile.html"
     login_url = "/account/login/"
 
+    def dispatch(self, *args, **kwargs):
+        return super().dispatch(*args, **kwargs)
+
+    def get(self, request, *args, **kwargs):
+        tab = kwargs['tab']
+        return render(request, "account/user_profile.html", {"tab":tab})
+
 class RegistrationView(CreateView):
     fields = ['username', 'email']
     template_name = 'account/registration.html'
-
 
     def post(self, request):
         user_form = RegistrationForm(data=request.POST)
@@ -58,7 +64,6 @@ class RegistrationView(CreateView):
             return redirect("account:user_login")
         else:
             return render(request, "account/registration.html", {"form": user_form})
-
 
     def get(self, request):
         return render(request, "account/registration.html")
@@ -594,5 +599,5 @@ class PasswordChangeDoneView(PasswordContextMixin, TemplateView):
     title = _('Password change successful')
 
     @method_decorator(login_required)
-    def dispatch(self, *args, **kwargs):
-        return super().dispatch(*args, **kwargs)
+    def dispatch(self, request, *args, **kwargs):
+        return super().dispatch(request, *args, **kwargs)

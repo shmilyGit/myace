@@ -1,6 +1,6 @@
 {% load staticfiles %}
 <!DOCTYPE html>
-<html lang="en" style="overflow:hidden;">
+<html lang="en">
     <head>
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
         <meta charset="utf-8" />
@@ -188,5 +188,6 @@
         <!-- inline scripts related to this page -->
         <script type="text/javascript">
         </script>
+        {% block jsscript%}{% endblock %}
     </body>
 </html>

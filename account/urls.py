@@ -11,7 +11,7 @@ urlpatterns = [
     ##基于类的视图
 	url(r'^login/$', auth_views.LoginView.as_view(template_name='account/login.html'), name="user_login"),
 	url(r'^logout/$', auth_views.LogoutView.as_view(template_name='account/login.html'), name="user_logout"),
-	url(r'^user-profile/$', auth_views.UserProfileView.as_view(), name="user_profile"),
+	url(r'^user-profile/(?P<tab>[-\d])/$', auth_views.UserProfileView.as_view(), name="user_profile"),
 
     ##密码修改
 	url(r'^password-change/$', auth_views.PasswordChangeView.as_view(template_name='account/user_profile.html',success_url='/account/password-change-done/'), name="password_change"),
