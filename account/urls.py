@@ -34,6 +34,8 @@ urlpatterns = [
     ##用户注册
 	url(r'^register/$', auth_views.RegistrationView.as_view(), name="user_register"),
 
+	url(r'^my-image/$', auth_views.my_image, name="my_image"),
+
 
     ##基于函数的视图
 	#url(r'^login/$', auth_views.login, {"template_name":"account/login.html"}, name="user_login"), #也可以使用,不推荐使用

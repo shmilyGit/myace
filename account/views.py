@@ -37,6 +37,10 @@ from django.shortcuts import render, redirect
 UserModel = get_user_model()
 
 ##BEGIN: Add by SRJ-SGL 
+
+def my_image(request):
+    return render(request, 'account/imagecrop.html');
+
 class ShowIndexPageView(LoginRequiredMixin, TemplateView):
     template_name = "index.html"
 
