@@ -15,7 +15,7 @@ urlpatterns = [
 
     ##密码修改
 	url(r'^password-change/$', auth_views.PasswordChangeView.as_view(template_name='account/user_profile.html',success_url='/account/password-change-done/'), name="password_change"),
-	url(r'^password-change-done/$', auth_views.PasswordChangeDoneView.as_view(template_name='hello.html'), name="password_change_done"),
+	url(r'^password-change-done/$', auth_views.PasswordChangeDoneView.as_view(template_name='account/user_profile.html'), name="password_change_done"),
 
     ##密码重置
 	url(r'^password-reset/$', auth_views.PasswordResetView.as_view(
@@ -43,7 +43,7 @@ urlpatterns = [
     ##密码修改
 	##template_name是给get请求使用, post_change_redirect是给post请求使用的
 	#url(r'^password-change/$', auth_views.password_change,{"template_name":"account/user_profile.html","post_change_redirect":"/account/password-change-done/"}, name="password_change"),
-	#url(r'^password-change-done/$', auth_views.password_change_done,{"template_name":"hello.html"}, name="password_change_done"),
+	#url(r'^password-change-done/$', auth_views.password_change_done,{"template_name":"account/user_profile.html"}, name="password_change_done"),
     
     ##密码重置
 	#url(r'^password-reset/$', auth_views.password_reset,{

@@ -546,6 +546,7 @@ def password_change(request,
             return HttpResponseRedirect(post_change_redirect)
     else:
         form = password_change_form(user=request.user)
+
     context = {
         'form': form,
         'title': _('Password change'),
@@ -592,7 +593,6 @@ class PasswordChangeView(PasswordContextMixin, FormView):
         # except the current one.
         update_session_auth_hash(self.request, form.user)
         return super().form_valid(form)
-
 
 class PasswordChangeDoneView(PasswordContextMixin, TemplateView):
     template_name = 'registration/password_change_done.html'
