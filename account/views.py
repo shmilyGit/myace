@@ -30,8 +30,10 @@ from django.views.generic.edit import FormView
 from braces.views import LoginRequiredMixin
 from django.http import HttpResponse
 from django.views.generic.edit import CreateView
-from .forms import RegistrationForm
 from django.shortcuts import render, redirect
+from django.contrib.auth.models import User
+from .forms import RegistrationForm, UserInfoForm, UserForm
+from .models import UserInfo
 ##END
 
 UserModel = get_user_model()
@@ -53,8 +55,37 @@ class UserProfileView(LoginRequiredMixin, TemplateView):
 
     def get(self, request, *args, **kwargs):
         tab = kwargs['tab']
-        return render(request, "account/user_profile.html", {"tab":tab})
+        if tab == '1':
+            user = User.objects.get(username = request.user.username)
+            userinfo = UserInfo.objects.get(user = user)
+            return render(request, self.template_name, {"tab":tab, "userinfo":userinfo, "user":user})
+        elif tab == '2':
+            return render(request, self.template_name, {"tab":tab})
 
+    def post(self, request, *args, **kwargs):
+        user = User.objects.get(username = request.user.username)
+        userinfo = UserInfo.objects.get(user = user)
+
+        user_form = UserForm(request.POST)
+        userinfo_form = UserInfoForm(request.POST)
+
+        if user_form.is_valid() * userinfo_form.is_valid():
+            user_cd = user_form.cleaned_data
+            userinfo_cd = userinfo_form.cleaned_data
+            
+            user.email = user_cd["email"] 
+            userinfo.name = userinfo_cd["name"]
+            userinfo.gender = request.POST.get('gender')
+            userinfo.birth= userinfo_cd["birth"]
+            userinfo.website= userinfo_cd["website"]
+            userinfo.phone= userinfo_cd["phone"]
+            userinfo.comment= userinfo_cd["comment"]
+
+            user.save()
+            userinfo.save()
+            return render(request, self.template_name, {"tab":"1", "userinfo":userinfo, "user":user, "msg":"1"})
+        return render(request, self.template_name, {"tab":"1", "userinfo":userinfo, "user":user, "user_form":user_form, "userinfo_form":userinfo_form, "msg":"2"})
+            
 class RegistrationView(CreateView):
     fields = ['username', 'email']
     template_name = 'account/registration.html'

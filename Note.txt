@@ -31,5 +31,7 @@
     > Get : vkey = kwargs['key']
     > Post: vkey = reqest.POST['key']
 
-12. 图片选择
-    > 查看 templetes/test/user_profile.html
+12. 图片上传
+    > 查看版本记录 templetes/test/user_profile.html
+
+13. session 的简单使用

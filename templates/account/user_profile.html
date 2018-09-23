@@ -21,37 +21,70 @@
 				</ul>
 
 				<div class="tab-content profile-edit-tab-content">
+                    {% if msg %}
+                    <div {% if msg == '1' %}class="alert alert-success"{% elif msg == '2'%}class="alert alert-danger"{% endif %}>
+                        <a href="#" class="close" data-dismiss="alert">
+                            &times;
+                        </a>
+                        {% if msg == '1' %}
+                        <strong>Success！</strong> Modify Success.
+                        {% elif msg == '2' %}
+                        <strong>Warning！</strong>Modify Error, Please Check ...
+                        {% endif %}
+                    </div>
+                    {% endif %}
+
 					<div id="edit-basic" {% if tab == '1' %} class="tab-pane in active" {% else %} class="tab-pane" {% endif %}>
                         <div class="row">
-                            <div class="col-sm-5">
-						        <form class="form-horizontal">
+                            <div class="col-sm-7">
+						        <form class="form-horizontal" action="{% url 'account:save_userinfo' %}" method="post">{% csrf_token %}
 						        	<h4 class="header blue bolder smaller">General</h4>
 
 						        	<div class="form-group">
-						        		<label class="col-sm-3 control-label no-padding-right" for="form-field-username">Username</label>
+						        		<label class="col-sm-3 control-label no-padding-right" >Username :</label>
 
 						        		<div class="col-sm-9">
-						        			<input class="col-xs-12 col-sm-10 input-large" type="text" id="form-field-username" placeholder="Username" value="alexdoe" />
+						        		<label class="control-label padding-left">{{ user.username }}</label>
 						        		</div>
 						        	</div>
 
 						        	<div class="space-4"></div>
 
 						        	<div class="form-group">
-						        		<label class="col-sm-3 control-label no-padding-right" for="form-field-first">Name</label>
+						        		<label class="col-sm-3 control-label no-padding-right" for="id_name">Name :</label>
 
 						        		<div class="col-sm-9">
-						        			<input class="col-xs-12 col-sm-10 input-large" type="text" id="form-field-first" placeholder="First Name" value="Alex" />
+						        			<input class="col-xs-12 col-sm-10 input-large" type="text" id="id_name" name="name" placeholder="Name" value="{{ userinfo.name}}" />
 						        		</div>
 						        	</div>
 
+						        	<div class="space-4"></div>
+
 						        	<div class="form-group">
-						        		<label class="col-sm-3 control-label no-padding-right" for="form-field-date">Birth Date</label>
+						        		<label class="col-sm-3 control-label no-padding-right">Gender :</label>
+
+						        		<div class="col-sm-9">
+						        		    <label class="control-label">
+						        				<input name="gender" type="radio" class="ace" {% if userinfo.gender is True  or userinfo.gender == "1" %} checked="checked" {% endif %} value="1" />
+						        				<span class="lbl middle"> Male</span>
+                                            </label>
+						        			&nbsp; &nbsp; &nbsp;
+						        		    <label class="control-label">
+						        				<input name="gender" type="radio" class="ace"{% if userinfo.gender is False or userinfo.gender == "0" %} checked="checked" {% endif %}  value="0"/>
+						        				<span class="lbl middle"> Female</span>
+                                            </label>
+						        		</div>
+						        	</div>
+
+						        	<div class="space-4"></div>
+
+						        	<div class="form-group">
+						        		<label class="col-sm-3 control-label no-padding-right" for="id_birth">Birth Date :</label>
 
 						        		<div class="col-sm-9">
 						        			<div class="input-large">
 						        				<div class="input-group">
-						        					<input class="input-large date-picker" id="form-field-date" type="text" data-date-format="dd-mm-yyyy" placeholder="dd-mm-yyyy" />
+						        					<input class="input-large date-picker" id="id_birth" name="birth" type="text" data-date-format="yyyy-mm-dd" placeholder="yyyy-mm-dd" value="{{ userinfo.birth | date:"Y-m-d" }}"/>
 						        					<span class="input-group-addon">
 						        						<i class="ace-icon fa fa-calendar"></i>
 						        					</span>
@@ -63,74 +96,71 @@
 						        	<div class="space-4"></div>
 
 						        	<div class="form-group">
-						        		<label class="col-sm-3 control-label no-padding-right">Gender</label>
+						        		<label class="col-sm-3 control-label no-padding-right" for="id_email">Email :</label>
 
 						        		<div class="col-sm-9">
-						        			<label class="inline">
-						        				<input name="form-field-radio" type="radio" class="ace" />
-						        				<span class="lbl middle"> Male</span>
-						        			</label>
+                                            <div class="row">
+						        		        <div class="col-sm-5">
+						        		    	    <span class="input-icon input-icon-right">
+						        		    	    	<i class="ace-icon fa fa-envelope"></i>
+						        		    	    	<input class="col-xs-12 col-sm-10 input-large"  type="email" id="id_email" name="email" value="{{ user.email }}" />
+						        		    	    </span>
+						        		        </div>
 
-						        			&nbsp; &nbsp; &nbsp;
-						        			<label class="inline">
-						        				<input name="form-field-radio" type="radio" class="ace" />
-						        				<span class="lbl middle"> Female</span>
-						        			</label>
+						        		        <div class="col-sm-6">
+								                    <label class="control-label padding-left red">{{ user_form.email.errors }}</label>
+						        		        </div>
+						        		    </div>
 						        		</div>
 						        	</div>
 
 						        	<div class="space-4"></div>
 
 						        	<div class="form-group">
-						        		<label class="col-sm-3 control-label no-padding-right" for="form-field-comment">Comment</label>
+						        		<label class="col-sm-3 control-label no-padding-right" for="id_website">Website :</label>
 
 						        		<div class="col-sm-9">
-						        			<textarea class="input-large" id="form-field-comment"></textarea>
-						        		</div>
-						        	</div>
+						        		    <div class="row">
+						        		        <div class="col-sm-5">
+						        			        <span class="input-icon input-icon-right">
+						        			        	<input class="col-xs-12 col-sm-10 input-large"  type="url" id="id_website" name="website" placeholder="http://" value="{{ userinfo.website}}" />
+						        			        	<i class="ace-icon fa fa-globe"></i>
+						        			        </span>
+						        		        </div>
 
-						        	<div class="space"></div>
-
-						        	<div class="form-group">
-						        		<label class="col-sm-3 control-label no-padding-right" for="form-field-email">Email</label>
-
-						        		<div class="col-sm-9">
-						        			<span class="input-icon input-icon-right">
-						        				<input class="col-xs-12 col-sm-10 input-large"  type="email" id="form-field-email" value="alexdoe@gmail.com" />
-						        				<i class="ace-icon fa fa-envelope"></i>
-						        			</span>
-						        		</div>
-						        	</div>
-
-						        	<div class="space-4"></div>
-
-						        	<div class="form-group">
-						        		<label class="col-sm-3 control-label no-padding-right" for="form-field-website">Website</label>
-
-						        		<div class="col-sm-9">
-						        			<span class="input-icon input-icon-right">
-						        				<input class="col-xs-12 col-sm-10 input-large"  type="url" id="form-field-website" value="http://www.alexdoe.com/" />
-						        				<i class="ace-icon fa fa-globe"></i>
-						        			</span>
+						        		        <div class="col-sm-6">
+								                    <label class="control-label padding-left red">{{ userinfo_form.website.errors }}</label>
+						        		        </div>
+						        		    </div>
 						        		</div>
 						        	</div>
 
 						        	<div class="space-4"></div>
 
 						        	<div class="form-group">
-						        		<label class="col-sm-3 control-label no-padding-right" for="form-field-phone">Phone</label>
+						        		<label class="col-sm-3 control-label no-padding-right" for="id_phone">Phone :</label>
 
 						        		<div class="col-sm-9">
 						        			<span class="input-icon input-icon-right">
-						        				<input class="col-xs-12 col-sm-10 input-large input-mask-phone" type="text" id="form-field-phone" />
+						        				<input class="col-xs-12 col-sm-10 input-large input-mask-phone" type="text" id="id_phone" name="phone" value="{{ userinfo.phone }}"/>
 						        				<i class="ace-icon fa fa-phone fa-flip-horizontal"></i>
 						        			</span>
 						        		</div>
 						        	</div>
 
-						        	<div class="clearfix form-actions">
+						        	<div class="form-group">
+						        		<label class="col-sm-3 control-label no-padding-right" for="id_comment">Comment :</label>
+
+						        		<div class="col-sm-9">
+						        			<textarea class="input-large" id="id_comment" name="comment">{{ userinfo.comment }}</textarea>
+						        		</div>
+						        	</div>
+
+						        	<div class="space-4"></div>
+
+						        	<div class="from-group clearfix">
 						        		<div class="col-md-offset-3 col-md-9">
-						        			<button class="btn btn-info" type="button">
+						        			<button class="btn btn-info" type="submit">
 						        				<i class="ace-icon fa fa-check bigger-110"></i>
 						        				Save
 						        			</button>
@@ -144,8 +174,19 @@
 						        	</div>
 						        </form>
                             </div>
-                            <div class="col-sm-7">
+                            <div class="col-sm-5">
+                                <style>
+                                   .sgl_headImg{
+                                        margin:auto;
+                                        width:200px;
+                                        height:200px;
+                                        cursor:pointer;
+                                    } 
+                                </style>
 						        <h4 class="header blue bolder smaller">Head portrait</h4>
+                                <div class="row">
+                                    <img class="img-circle img-responsive sgl_headImg" name="user_face" title="click & modify" src="{% static 'images/test.jpg' %}" onclick="upload_image_layer()">
+                                </div>
                             </div>
                         </div>
 					</div>
@@ -157,20 +198,20 @@
 							<input name="tab_flag" type="hidden" value="2" />
 
 							<div class="form-group">
-								<label class="col-sm-3 control-label no-padding-right" for="form-field-oldpass">Old Password</label>
+								<label class="col-sm-3 control-label no-padding-right" for="id_old_password">Old Password</label>
 
 								<div class="col-sm-9">
-									<input class="col-xs-4" name="old_password" type="password" id="form-field-oldpass" />
+									<input class="col-xs-4" name="old_password" type="password" id="id_old_password" />
 								    <label class="control-label no-padding-left red">{{ form.old_password.errors }}</label>
 								</div>
 							</div>
 
 							<div class="space-4"></div>
 							<div class="form-group">
-								<label class="col-sm-3 control-label no-padding-right" for="form-field-pass1">New Password</label>
+								<label class="col-sm-3 control-label no-padding-right" for="id_new_password1">New Password</label>
 
 								<div class="col-sm-9">
-									<input class="col-xs-4" name="new_password1" type="password" id="form-field-pass1" />
+									<input class="col-xs-4" name="new_password1" type="password" id="id_new_password1" />
 								    <label class="control-label no-padding-left red">{{ form.new_password1.errors }}</label>
 								</div>
 							</div>
@@ -178,10 +219,10 @@
 							<div class="space-4"></div>
 
 							<div class="form-group">
-								<label class="col-sm-3 control-label no-padding-right" for="form-field-pass2">Confirm Password</label>
+								<label class="col-sm-3 control-label no-padding-right" for="id_new_password2">Confirm Password</label>
 
 								<div class="col-sm-9">
-									<input class="col-xs-4" name="new_password2" type="password" id="form-field-pass2" />
+									<input class="col-xs-4" name="new_password2" type="password" id="id_new_password2" />
 								    <label class="control-label no-padding-left red">{{ form.new_password2.errors }}</label>
 								</div>
 							</div>
@@ -216,30 +257,24 @@
 <script src="{% static 'assets/js/bootstrap-datepicker.min.js' %}"></script>
 <script src="{% static 'assets/js/jquery.hotkeys.index.min.js' %}"></script>
 <script src="{% static 'assets/js/jquery.maskedinput.min.js' %}"></script>
+<script  src="{% static 'layer/layer.js' %}"></script>
 
 <!-- inline scripts related to this page -->
 <script type="text/javascript">
 	jQuery(function($) {
-		$('#user-profile-3')
-		.find('input[type=file]').ace_file_input({
-			style:'well',
-			btn_choose:'Change avatar',
-			btn_change:null,
-			no_icon:'ace-icon fa fa-picture-o',
-			thumbnail:'large',
-			droppable:true,
-			
-			allowExt: ['jpg', 'jpeg', 'png', 'gif'],
-			allowMime: ['image/jpg', 'image/jpeg', 'image/png', 'image/gif']
-		})
-		.end().find('button[type=reset]').on(ace.click_event, function(){
-			$('#user-profile-3 input[type=file]').ace_file_input('reset_input');
-		})
-		.end().find('.date-picker').datepicker().next().on(ace.click_event, function(){
-			$(this).prev().focus();
-		})
-
 		$('.input-mask-phone').mask('999-9999-9999');
+		$('.date-picker').datepicker().next().on(ace.click_event, function(){
+			$(this).prev().focus();
+		});
 	});
+
+	function upload_image_layer(){
+		layer.open({
+			title:"上传头像",	
+			area: ['650px','550px'],
+			type: 2,
+			content: "{% url 'account:my_image' %}",
+		});
+	}
 </script>
 {% endblock %}

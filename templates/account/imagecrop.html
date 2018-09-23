@@ -44,8 +44,8 @@ $(window).load(function() {
 		//this.files = [];
 		//getImg();
 	})
+
 	$('#btnCrop').on('click', function(){
-	    //alert("图片上传喽");
 		$.ajax({
 			url: '{% url "account:my_image" %}',
 			type: 'POST',
