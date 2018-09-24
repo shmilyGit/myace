@@ -24,7 +24,7 @@
 	top: 0;
 	width: 200px;
 	border: 1px #ddd solid;
-	height: 460px;
+	height: 440px;
 	padding: 4px;
 	box-shadow: 0px 0px 12px #ddd;
 	text-align: center;
@@ -38,17 +38,17 @@
 	overflow: hidden;
 	background-repeat: no-repeat;
 	cursor: move;
-	box-shadow: 4px 4px 12px #B0B0B0; 
+	box-shadow: 2px 2px 4px #B0B0B0; 
 }
 .imageBox .thumbBox {
 	position: absolute;
 	top: 50%;
 	left: 50%;
-	width: 200px;
-	height: 200px;
-	margin-top: -100px;
+	width: 260px;
+	height: 260px;
+	margin-top: -130px;
 	border-radius:200px;
-	margin-left: -100px;
+	margin-left: -130px;
 	box-sizing: border-box;
 	border: 1px solid rgb(102, 102, 102);
 	box-shadow: 0 0 0 1000px rgba(0, 0, 0, 0.5);
@@ -69,12 +69,12 @@
    width: 66px;
   display: inline-block;
   margin-bottom: 10px;
-  height: 57px;
-  line-height: 57px;
+  height: 40px;
+  line-height: 40px;
   font-size: 20px;
   color: #FFFFFF;
   margin:0px 2px;
-  background-color: #f38e81;
+  background-color: #6FB3E0;
   border-radius: 3px;
   text-decoration: none;
   cursor: pointer;
@@ -94,7 +94,7 @@
 }
 .new-contentarea input[type=file] {
 	width:188px;
-	height:60px;
+	height:40px;
 	background:#333;
 	margin: 0 auto;
 	position:absolute;
@@ -112,11 +112,11 @@ a.upload-img{
 	width:165px;
 	display: inline-block;
 	margin-bottom: 10px;
-	height:57px;
-	line-height: 57px;
+	height:40px;
+	line-height: 40px;
 	font-size: 20px;
 	color: #FFFFFF;
-	background-color: #f38e81;
+	background-color: #6FB3E0;
 	border-radius: 3px;
 	text-decoration:none;
 	cursor:pointer;
