@@ -2,9 +2,9 @@
 <div id="navbar" class="navbar navbar-default          ace-save-state">
 	<div class="navbar-container ace-save-state" id="navbar-container">
 		<div class="navbar-header pull-left">
-			<a href="index.html" class="navbar-brand">
+			<a href="{% url 'show_index' %}" class="navbar-brand">
 				<small>
-					<i class="fa fa-leaf"></i>
+					<i class="fa fa-fire"></i>
 					SGL 内部加班管理系统 
 				</small>
 			</a>
@@ -269,7 +269,11 @@
 
 				<li class="light-blue dropdown-modal">
 					<a data-toggle="dropdown" href="#" class="dropdown-toggle">
-						<img class="nav-user-photo" src="{% static 'assets/images/avatars/user.jpg' %}" alt="Jason's Photo" />
+                        {% if user.userinfo.photo %}
+						<img class="nav-user-photo" src="{{ user.userinfo.photo | striptags }}" alt="Your's Photo" />
+                        {% else %}
+						<img class="nav-user-photo" src="{% static 'images/wolf.jpg' %}" alt="Your's Photo" />
+                        {% endif %}
 						<span class="user-info">
 							<small>Welcome</small>
 							{% if user.is_authenticated%}

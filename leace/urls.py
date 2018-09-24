@@ -24,7 +24,7 @@ urlpatterns = [
     url(r'^account/', include('account.urls', namespace='account')),
 
 #登录之后跳转到该页,该页即首页
-    url(r'^index/', auth_views.ShowIndexPageView.as_view(), name='show_index'),
+    url(r'^index/', auth_views.IndexPageView.as_view(), name='show_index'),
 
 #直接访问IP:port 后边不用加路径, 即http://192.168.5.105:8000就会跳转到login.html
 #方法一,这样不会在html模板中使用{{form.password}}

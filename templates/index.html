@@ -1,1 +1,26 @@
-{% include "frame/base.html" %}
+{% extends "frame/base.html" %}
+{% load staticfiles %}
+
+{% block content %}
+<div class="col-xs-offset-2 col-xs-8 col-sm-offset-2 col-sm-8" style="margin-top:50px;margin-bottom:100px">
+    <div class="panel panel-info">
+        <div class="panel-heading">
+            <h4 class="panel-title center">温馨提示</h4>
+        </div>
+        <div class="panel-body center">
+            <h4>加班: 以0.5小时为单位计算,不够0.5小时的不统计 12:00-13:00不统计</h4>
+            <br/> 
+
+            <h4>倒休: 以4小时为单位计算,不够4小时的按4小时计算 具体时间以石总在OA上的批复为准</h4>
+            <br/> 
+
+            <h4>举例: 9:00--14:00 加班为4小时,倒休则为4小时</h4>
+            <br/> 
+
+            <h4>为考虑工作效率和大家身体健康,加班不够8小时正常统计,超过8小时按8小时统计</h4>
+            <br/> 
+        </div>
+    </div>
+</div>
+{% endblock %}
+

@@ -39,12 +39,23 @@ from .models import UserInfo
 UserModel = get_user_model()
 
 ##BEGIN: Add by SRJ-SGL 
-
-def my_image(request):
-    return render(request, 'account/imagecrop.html');
-
-class ShowIndexPageView(LoginRequiredMixin, TemplateView):
+class IndexPageView(LoginRequiredMixin, TemplateView):
     template_name = "index.html"
+    login_url = "/account/login/"
+
+class MineHeadImage(LoginRequiredMixin, TemplateView):
+    template_name = "account/imagecrop.html"
+    login_url = "/account/login/"
+
+    def dispatch(self, request, *args, **kwargs):
+        return super().dispatch(request, *args, **kwargs)
+
+    def post(self, request, *args, **kwargs):
+        img = request.POST['img']
+        userinfo = UserInfo.objects.get(user = request.user.id)
+        userinfo.photo = img
+        userinfo.save()
+        return HttpResponse("1")
 
 class UserProfileView(LoginRequiredMixin, TemplateView):
     template_name = "account/user_profile.html"
@@ -90,18 +101,20 @@ class RegistrationView(CreateView):
     fields = ['username', 'email']
     template_name = 'account/registration.html'
 
+    def get(self, request):
+        return render(request, "account/registration.html")
+
     def post(self, request):
         user_form = RegistrationForm(data=request.POST)
         if user_form.is_valid():
             new_user = user_form.save(commit=False)
             new_user.set_password(user_form.cleaned_data['password'])
             new_user.save()
+            UserInfo.objects.create(user = new_user)
             return redirect("account:user_login")
         else:
             return render(request, "account/registration.html", {"form": user_form})
 
-    def get(self, request):
-        return render(request, "account/registration.html")
 ##END
 
 class SuccessURLAllowedHostsMixin:
@@ -627,7 +640,11 @@ class PasswordChangeView(PasswordContextMixin, FormView):
         # Updating the password logs out all other sessions for the user
         # except the current one.
         update_session_auth_hash(self.request, form.user)
-        return super().form_valid(form)
+        return render(self.request, self.template_name, {"tab":"2", "msg":"1"})
+        #return super().form_valid(form)
+
+    def form_invalid(self, form):
+        return render(self.request, self.template_name, {"tab":"2", "msg":"2", "form":form})
 
 class PasswordChangeDoneView(PasswordContextMixin, TemplateView):
     template_name = 'registration/password_change_done.html'

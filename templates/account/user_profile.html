@@ -8,14 +8,14 @@
 					<li {% if tab == '1' %}class="active" {% endif %}>
 						<a href="{% url 'account:user_profile' 1 %}">
 							<i class="green ace-icon fa fa-pencil-square-o bigger-125"></i>
-							Basic Info {{ tab }}
+							Basic Info 
 						</a>
 					</li>
 
 					<li {% if tab == '2' %}class="active" {% endif %}>
 						<a  href="{% url 'account:user_profile' 2 %}">
 							<i class="blue ace-icon fa fa-key bigger-125"></i>
-							Password {{ tab }}
+							Password 
 						</a>
 					</li>
 				</ul>
@@ -185,7 +185,11 @@
                                 </style>
 						        <h4 class="header blue bolder smaller">Head portrait</h4>
                                 <div class="row">
-                                    <img class="img-circle img-responsive sgl_headImg" name="user_face" title="click & modify" src="{% static 'images/test.jpg' %}" onclick="upload_image_layer()">
+                                    {% if userinfo.photo %}
+                                    <img class="img-circle img-responsive sgl_headImg" name="user_face" title="click & modify" src="{{ userinfo.photo | striptags }}" onclick="upload_image_layer()">
+                                    {% else %}
+                                    <img class="img-circle img-responsive sgl_headImg" name="user_face" title="click & modify" src="{% static 'images/wolf.jpg' %}" onclick="upload_image_layer()">
+                                    {% endif %}
                                 </div>
                             </div>
                         </div>
@@ -195,7 +199,6 @@
 					<div id="edit-password" {% if tab == '2' %} class="tab-pane in active" {% else %} class="tab-pane" {% endif %}>
 						<form class="form-horizontal" method="post" action="{% url 'account:password_change' %}">{% csrf_token %}
 							<div class="space-10"></div>
-							<input name="tab_flag" type="hidden" value="2" />
 
 							<div class="form-group">
 								<label class="col-sm-3 control-label no-padding-right" for="id_old_password">Old Password</label>
@@ -270,10 +273,10 @@
 
 	function upload_image_layer(){
 		layer.open({
-			title:"上传头像",	
-			area: ['650px','550px'],
+			title:"Upload the picture",	
+			area: ['650px','520px'],
 			type: 2,
-			content: "{% url 'account:my_image' %}",
+			content: "{% url 'account:my_headimage' %}",
 		});
 	}
 </script>

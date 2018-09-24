@@ -9,11 +9,16 @@ urlpatterns = [
 	#django2.1已经使用基于类的视图代替了基于函数的视图,不过真用基于视图的也可以
 
     ##基于类的视图
+
+    ##登录与注册
 	url(r'^login/$', auth_views.LoginView.as_view(template_name='account/login.html'), name="user_login"),
 	url(r'^logout/$', auth_views.LogoutView.as_view(template_name='account/login.html'), name="user_logout"),
+	url(r'^register/$', auth_views.RegistrationView.as_view(), name="user_register"),
+
+    ##基本信息修改
 	url(r'^user-profile/(?P<tab>[-\d])/$', auth_views.UserProfileView.as_view(), name="user_profile"),
 	url(r'^save-userinfo/$', auth_views.UserProfileView.as_view(), name="save_userinfo"),
-
+	url(r'^my-headimage/$', auth_views.MineHeadImage.as_view(), name="my_headimage"),
 
     ##密码修改
 	url(r'^password-change/$', auth_views.PasswordChangeView.as_view(template_name='account/user_profile.html',success_url='/account/password-change-done/'), name="password_change"),
@@ -33,10 +38,6 @@ urlpatterns = [
 	url(r'^password-reset-complete/$', auth_views.PasswordResetCompleteView.as_view(
                                 template_name='account/password_reset_complete.html',
                                 ), name="password_reset_complete"),
-    ##用户注册
-	url(r'^register/$', auth_views.RegistrationView.as_view(), name="user_register"),
-
-	url(r'^my-image/$', auth_views.my_image, name="my_image"),
 
 
     ##基于函数的视图
