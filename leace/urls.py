@@ -22,6 +22,7 @@ from account import views as auth_views
 urlpatterns = [
     path('admin/', admin.site.urls),
     url(r'^account/', include('account.urls', namespace='account')),
+    url(r'^otrest/', include('otrest.urls', namespace='otrest')),
 
 #登录之后跳转到该页,该页即首页
     url(r'^index/', auth_views.IndexPageView.as_view(), name='show_index'),
