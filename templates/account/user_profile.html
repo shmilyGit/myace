@@ -1,6 +1,8 @@
 {% extends "frame/base.html" %}
 {% load staticfiles %}
 {% block content %}
+<link rel="stylesheet" href="{% static 'assets/css/bootstrap-datepicker3.min.css' %}" />
+
 <div id="user-profile-3" class="user-profile row">
 	<div class="col-sm-offset-1 col-sm-10">
 			<div class="tabbable">
@@ -266,7 +268,11 @@
 <script type="text/javascript">
 	jQuery(function($) {
 		$('.input-mask-phone').mask('999-9999-9999');
-		$('.date-picker').datepicker().next().on(ace.click_event, function(){
+		$('.date-picker').datepicker({
+            autoclose: true,
+            todayHighlight: true
+        })
+        .next().on(ace.click_event, function(){
 			$(this).prev().focus();
 		});
 	});

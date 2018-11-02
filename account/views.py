@@ -40,7 +40,7 @@ UserModel = get_user_model()
 
 ##BEGIN: Add by SRJ-SGL 
 class IndexPageView(LoginRequiredMixin, TemplateView):
-    template_name = "index.html"
+    template_name = "frame/index.html"
     login_url = "/account/login/"
 
 class MineHeadImage(LoginRequiredMixin, TemplateView):
