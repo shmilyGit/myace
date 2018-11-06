@@ -3,6 +3,7 @@
 {% block content %}
 <link rel="stylesheet" href="{% static 'assets/css/bootstrap-datepicker3.min.css' %}" />
 
+<div class="space-24"></div>
 <div class="row">
     <div class="col-xs-12 col-sm-offset-4 col-sm-4">
     	<div class="widget-box">
@@ -24,7 +25,7 @@
     			<div class="widget-main">
                     <div class="row">
                         <div class="col-xs-12">
-                            <form class="form-horizontal" action="{% url 'account:save_userinfo' %}" method="post">{% csrf_token %}
+                            <form class="form-horizontal" action="{% url 'otrest:save_otrequest' %}" method="post">{% csrf_token %}
 
                                 <hr> 
 
@@ -32,7 +33,7 @@
                             		<label class="col-sm-offset-1 col-sm-2 control-label no-padding-right" for="id_birth">加班时间:</label>
                             		<div class="col-sm-7">
                             			<div class="input-group">
-                            				<input class="form-control date-picker" id="id_birth" name="birth" type="text" data-date-format="yyyy-mm-dd" placeholder="yyyy-mm-dd" value="{{ userinfo.birth | date:"Y-m-d" }}"/>
+                            				<input class="form-control date-picker" id="id_ottime" name="ottime" type="text" data-date-format="yyyy-mm-dd" placeholder="yyyy-mm-dd"/>
                             				<span class="input-group-addon">
                             					<i class="ace-icon fa fa-calendar"></i>
                             				</span>
@@ -45,7 +46,7 @@
                             	<div class="form-group">
                             		<label class="col-sm-offset-1 col-sm-2 control-label no-padding-right" for="id_comment">加班事由:</label>
                             		<div class="col-sm-7">
-                            			<textarea class="form-control" style="resize:none" id="id_comment" name="comment">{{ userinfo.comment }}</textarea>
+                            			<textarea class="form-control" style="resize:none" id="id_reason" name="reason"></textarea>
                             		</div>
                             	</div>
                             

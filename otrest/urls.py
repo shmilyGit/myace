@@ -5,5 +5,6 @@ from . import views as otrest_views
 
 app_name='otrest'
 urlpatterns = [
-	url(r'^ot-request/$', otrest_views.OtRestView.as_view(), name="ot_request"),
+	url(r'^ot-request/$', otrest_views.OtRequestView.as_view(), name="ot_request"),
+	url(r'^save-otrequest/$', otrest_views.OtRequestView.as_view(), name="save_otrequest"),
 ]

@@ -1,7 +1,7 @@
 from django import forms
-from .models import OtRest
+from .models import OtRequest
 
-class OtRestForm(forms.ModelForm):
+class OtRequestForm(forms.ModelForm):
     class Meta:
-        model = OtRest 
+        model = OtRequest
         fields = ("ottime","reason",)
