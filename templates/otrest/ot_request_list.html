@@ -1,0 +1,28 @@
+{% extends "frame/base.html" %}
+{% load staticfiles %}
+{% block content %}
+
+<div class="row">
+    <table>
+        <tr>
+            <td>序号</td>  
+            <td>加班日期</td>  
+            <td>加班事由</td>  
+            <td>审批</td>  
+            <td>操作时间</td>  
+        </tr>
+        {% for otrequest in otrequests %}
+        <tr id={{ forloop.counter }}>
+            <td>{{ forloop.counter }}</td>
+            <td>{{ otrequest.ottime }}</td>
+            <td>{{ otrequest.reason }}</td>
+            <td>{{ otrequest.approve }}</td>
+            <td>{{ otrequest.created }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+{% endblock %}
+
+{% block jsscript%}
+{% endblock %}
