@@ -1,7 +1,6 @@
 {% extends "frame/base.html" %}
 {% load staticfiles %}
 {% block content %}
-
 <div class="row">
 	<div class="col-xs-12">
 		<div>
@@ -24,7 +23,7 @@
 				</thead>
 				<tbody>
                     {% for otrequest in otrequests %}
-                    <tr id={{ forloop.counter }}>
+                    <tr {% if forloop.counter|divisibleby:4 %} class="even" {% else %} class="odd" {% endif %}>
 						<td class="center">
 							<label class="pos-rel">
 								<input type="checkbox" class="ace" />
@@ -34,15 +33,15 @@
                         <td class="center">{{ forloop.counter }}</td>
                         <td class="center">{{ otrequest.ottime }}</td>
                         <td class="center">{{ otrequest.reason }}</td>
-                        <td class="center">{{ otrequest.approve }}</td>
-                        <td class="center">{{ otrequest.created }}</td>
+                        <td class="center">{% if otrequest.approve %}审批{% else %}未审批{% endif %}</td>
+                        <td class="center">{{ otrequest.created | date:"Y-m-d H:m:s" }}</td>
 						<td class="center">
 							<div class="hidden-sm hidden-xs action-buttons">
-								<a class="green" href="#">
+								<a class="green" href="{% url 'otrest:edit_otrequest' otrequest.id %}">
 									<i class="ace-icon fa fa-pencil bigger-130"></i>
 								</a>
 
-								<a class="red" href="#">
+								<a class="red del-otrequest" href="{% url 'otrest:del_otrequest' otrequest.id %}">
 									<i class="ace-icon fa fa-trash-o bigger-130"></i>
 								</a>
 							</div>
@@ -55,7 +54,7 @@
 
 									<ul class="dropdown-menu dropdown-only-icon dropdown-yellow dropdown-menu-right dropdown-caret dropdown-close">
 										<li>
-											<a href="#" class="tooltip-success" data-rel="tooltip" title="Edit">
+											<a href="{% url 'otrest:edit_otrequest' otrequest.id %}" class="tooltip-success" data-rel="tooltip" title="Edit">
 												<span class="green">
 													<i class="ace-icon fa fa-pencil-square-o bigger-120"></i>
 												</span>
@@ -63,7 +62,7 @@
 										</li>
 
 										<li>
-											<a href="#" class="tooltip-error" data-rel="tooltip" title="Delete">
+											<a href="{% url 'otrest:del_otrequest' otrequest.id %}" class="tooltip-error del-otrequest" data-rel="tooltip" title="Delete">
 												<span class="red">
 													<i class="ace-icon fa fa-trash-o bigger-120"></i>
 												</span>
@@ -83,10 +82,11 @@
 {% endblock %}
 
 {% block jsscript%}
-<script src="{% static 'assets/js/jquery.dataTables.min.js' %}"></script>
-<script src="{% static 'assets/js/jquery.dataTables.bootstrap.min.js' %}"></script>
-<script src="{% static 'assets/js/dataTables.buttons.min.js' %}"></script>
-<script src="{% static 'assets/js/dataTables.select.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'assets/js/jquery.dataTables.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'assets/js/jquery.dataTables.bootstrap.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'assets/js/dataTables.buttons.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'assets/js/dataTables.select.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'common/js/csrf.js' %}"></script>
 <script type="text/javascript">
 	jQuery(function($) {
 		//initiate dataTables plugin
@@ -94,7 +94,7 @@
 		$('#otrequest-list-table')
 		//.wrap("<div class='dataTables_borderWrap' />")   //if you are applying horizontal scrolling (sScrollX)
 		.DataTable( {
-			bAutoWidth: true,
+			bAutoWidth: false,
 			"aoColumns": [
 			  { "bSortable": false },
 			  null, null,null, null, null,
@@ -165,6 +165,29 @@
 			e.stopPropagation();
 			e.preventDefault();
 		});
-	})
+
+        var onDelete = function(){
+            var r = confirm("确定要删除?");
+            if (!r){
+                return false;
+            }
+
+            $.post(this.href, function(data){
+                if (data.result == "ok"){
+                    //window.location.href = "{% url 'otrest:list_otrequest' %}"
+                    window.location.reload();
+                }else {
+                    alert ("删除失败.");
+                }
+            }).fail(function(){
+                alert("删除出错.");
+            });
+
+            return false;
+        }
+        
+        $(".del-otrequest").click(onDelete);
+
+	});
 </script>
 {% endblock %}

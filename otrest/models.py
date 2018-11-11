@@ -7,6 +7,9 @@ class OtRequest(models.Model):
     reason = models.TextField(max_length=100, blank=True)
     approve = models.BooleanField(default=False)
     created = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ('-id',)
     
     def __str__(self):
         return 'user:{},{},{}'.format(self.user.username, self.ottime, self.reason)
