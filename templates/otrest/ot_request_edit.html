@@ -8,7 +8,7 @@
     <div class="col-xs-12 col-sm-offset-4 col-sm-4">
     	<div class="widget-box">
     		<div class="widget-header">
-    			<h4 class="widget-title">加班申请</h4>
+    			<h4 class="widget-title">修改加班申请</h4>
     
     			<div class="widget-toolbar">
     				<a href="#" data-action="collapse">
@@ -33,7 +33,7 @@
                             		<label class="col-sm-offset-1 col-sm-2 control-label no-padding-right" for="id_birth">加班时间:</label>
                             		<div class="col-sm-7">
                             			<div class="input-group">
-                            				<input class="form-control date-picker" id="id_ottime" name="ottime" type="text" data-date-format="yyyy-mm-dd" placeholder="yyyy-mm-dd"/>
+                            				<input class="form-control date-picker" id="id_ottime" name="ottime" type="text" data-date-format="yyyy-mm-dd" placeholder="yyyy-mm-dd" value="{{otrequest.ottime | date:"Y-m-d"}}"/>
                             				<span class="input-group-addon">
                             					<i class="ace-icon fa fa-calendar"></i>
                             				</span>
@@ -46,7 +46,7 @@
                             	<div class="form-group">
                             		<label class="col-sm-offset-1 col-sm-2 control-label no-padding-right" for="id_comment">加班事由:</label>
                             		<div class="col-sm-7">
-                            			<textarea class="form-control" style="resize:none" id="id_reason" name="reason"></textarea>
+                            			<textarea class="form-control" style="resize:none" id="id_reason" name="reason">{{otrequest.reason}}</textarea>
                             		</div>
                             	</div>
                             

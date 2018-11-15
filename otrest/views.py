@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from braces.views import LoginRequiredMixin
-from django.views.generic import CreateView, ListView, DeleteView, UpdateView
+from django.views.generic import CreateView, ListView, DeleteView, UpdateView, DetailView
 from django.views.generic.base import TemplateView
 from django.contrib.auth.models import User
 from django.urls import reverse_lazy
@@ -12,7 +12,7 @@ from .forms import OtRequestForm
 
 # Create your views here.
 
-class OtRequestView(LoginRequiredMixin, CreateView):
+class OtRequestCreateView(LoginRequiredMixin, CreateView):
     login_url = "/account/login/"
 
     fields = ['ottime', 'reason']
@@ -47,7 +47,6 @@ class OtRequestDeleteView(LoginRequiredMixin, DeleteView):
     success_url = reverse_lazy("otrest:list_otrequest")
     model = OtRequest
 
-
     def dispatch(self, *args, **kwargs):
         resp = super(OtRequestDeleteView, self).dispatch(*args, **kwargs)
 
@@ -56,12 +55,34 @@ class OtRequestDeleteView(LoginRequiredMixin, DeleteView):
             return HttpResponse(json.dumps(response_data), content_type="application/json")
         else:
             return resp
-    
-class OtRequestUpdateView(LoginRequiredMixin, UpdateView):
+
+class OtRequestDetailView(LoginRequiredMixin, DetailView):
     login_url = "/account/login/"
     template_name = "otrest/ot_request_edit.html"
+    context_object_name = "otrequest"
+
+    model = OtRequest
+
+    ##下边注释的两个函数其实放开效果是一样的,只不过是记录一下怎么取url中的参数的方法
+    ##def get_object(self,queryset=None):
+    ##    otrequest_id = int(self.kwargs.get(self.pk_url_kwarg, None))
+    ##    otrequest = OtRequest.objects.get(id = otrequest_id)
+    ##    return otrequest
+
+    ##def get_context_data(self, **kwargs):
+    ##    context = super().get_context_data(**kwargs)
+    ##    return context
+
+class OtRequestUpdateView(LoginRequiredMixin, UpdateView):
+    login_url = "/account/login/"
+    success_url = reverse_lazy("otrest:list_otrequest")
+    model = OtRequest
+    fields = ['ottime','reason']
+
     template_name_suffix = '_update_form'
 
-    form_class = OtRequestForm
-    model = OtRequest
-    success_url = reverse_lazy("otrest:list_otrequest")
+    def get_form_kwargs(self):
+        kwargs = super(OtRequestUpdateView, self).get_form_kwargs()
+        kwargs.update({'ottime':self.request.ottime})
+        print("======================================", self.request.ottime)
+        return kwargs
