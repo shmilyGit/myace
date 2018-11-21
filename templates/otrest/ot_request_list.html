@@ -41,7 +41,7 @@
 									<i class="ace-icon fa fa-pencil bigger-130"></i>
 								</a>
 
-								<a class="red del-otrequest" href="{% url 'otrest:del_otrequest' otrequest.id %}">
+								<a class="red del-otrequest" href="{% url 'otrest:delete_otrequest' otrequest.id %}">
 									<i class="ace-icon fa fa-trash-o bigger-130"></i>
 								</a>
 							</div>
@@ -62,7 +62,7 @@
 										</li>
 
 										<li>
-											<a href="{% url 'otrest:del_otrequest' otrequest.id %}" class="tooltip-error del-otrequest" data-rel="tooltip" title="Delete">
+											<a href="{% url 'otrest:delete_otrequest' otrequest.id %}" class="tooltip-error del-otrequest" data-rel="tooltip" title="Delete">
 												<span class="red">
 													<i class="ace-icon fa fa-trash-o bigger-120"></i>
 												</span>

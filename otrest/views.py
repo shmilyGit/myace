@@ -14,9 +14,9 @@ from .forms import OtRequestForm
 
 class OtRequestCreateView(LoginRequiredMixin, CreateView):
     login_url = "/account/login/"
-
     fields = ['ottime', 'reason']
     template_name = 'otrest/ot_request.html'
+    extra_context = {'class_open':'active open', 'class_active':'active'}
 
     ##Note1 当继承的是TempLateView时使用这个
     ##def get(self, request):
@@ -35,11 +35,13 @@ class OtRequestCreateView(LoginRequiredMixin, CreateView):
             new_otrequest.user = request.user
             new_otrequest.save(form_cd)
             return redirect("otrest:list_otrequest")
+        return self.render_to_response({"form":otrequest_form})
 
 class OtRequestListView(LoginRequiredMixin, ListView):
     login_url = "/account/login/"
     model = OtRequest
     context_object_name = "otrequests"
+    extra_context = {'class_open':'active open', 'class_active':'active'}
     template_name = 'otrest/ot_request_list.html'
 
 class OtRequestDeleteView(LoginRequiredMixin, DeleteView):
@@ -75,14 +77,8 @@ class OtRequestDetailView(LoginRequiredMixin, DetailView):
 
 class OtRequestUpdateView(LoginRequiredMixin, UpdateView):
     login_url = "/account/login/"
-    success_url = reverse_lazy("otrest:list_otrequest")
+
     model = OtRequest
-    fields = ['ottime','reason']
-
     template_name_suffix = '_update_form'
-
-    def get_form_kwargs(self):
-        kwargs = super(OtRequestUpdateView, self).get_form_kwargs()
-        kwargs.update({'ottime':self.request.ottime})
-        print("======================================", self.request.ottime)
-        return kwargs
+    success_url = reverse_lazy("otrest:list_otrequest")
+    form_class = OtRequestForm
