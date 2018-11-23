@@ -34,20 +34,20 @@
 	</div><!-- /.sidebar-shortcuts -->
 
 	<ul class="nav nav-list">
-		<li class="active">
+		<li class="{{m1}}">
 			<a href="{% url 'show_index' %}">
 				<i class="menu-icon fa fa-tachometer"></i>
-				<span class="menu-text"> Dashboard </span>
+				<span class="menu-text"> 首  页 </span>
 			</a>
 
 			<b class="arrow"></b>
 		</li>
 
-		<li class="">
+		<li class="{{m2}}">
 			<a href="#" class="dropdown-toggle">
 				<i class="menu-icon fa fa-desktop"></i>
 				<span class="menu-text">
-					UI &amp; Elements
+				    加班详情
 				</span>
 
 				<b class="arrow fa fa-angle-down"></b>
@@ -56,28 +56,28 @@
 			<b class="arrow"></b>
 
 			<ul class="submenu">
-				<li class="">
+				<li class="{{m2s1}}">
 					<a href="{% url 'otrest:otrequest' %}">
 						<i class="menu-icon fa fa-caret-right"></i>
-						Typography
+					    加班申请
 					</a>
 
 					<b class="arrow"></b>
 				</li>
 
-				<li class="">
+				<li class="{{m2s2}}">
 					<a href="{% url 'otrest:list_otrequest' %}">
 						<i class="menu-icon fa fa-caret-right"></i>
-						Elements
+					    申请记录
 					</a>
 
 					<b class="arrow"></b>
 				</li>
 
-				<li class="">
+				<li class="{{m2s3}}">
 					<a href="buttons.html">
 						<i class="menu-icon fa fa-caret-right"></i>
-						Buttons &amp; Icons
+					    加班详情
 					</a>
 
 					<b class="arrow"></b>

@@ -42,7 +42,7 @@ UserModel = get_user_model()
 class IndexPageView(LoginRequiredMixin, TemplateView):
     template_name = "frame/index.html"
     login_url = "/account/login/"
-    extra_context = {'class_open':'active open', 'class_active':'active'}
+    extra_context = {'m1':'active'}
 
 class MineHeadImage(LoginRequiredMixin, TemplateView):
     template_name = "account/imagecrop.html"

@@ -16,7 +16,7 @@ class OtRequestCreateView(LoginRequiredMixin, CreateView):
     login_url = "/account/login/"
     fields = ['ottime', 'reason']
     template_name = 'otrest/ot_request.html'
-    extra_context = {'class_open':'active open', 'class_active':'active'}
+    extra_context = {'m2':'active open', 'm2s1':'active'}
 
     ##Note1 当继承的是TempLateView时使用这个
     ##def get(self, request):
@@ -41,7 +41,7 @@ class OtRequestListView(LoginRequiredMixin, ListView):
     login_url = "/account/login/"
     model = OtRequest
     context_object_name = "otrequests"
-    extra_context = {'class_open':'active open', 'class_active':'active'}
+    extra_context = {'m2':'active open', 'm2s2':'active'}
     template_name = 'otrest/ot_request_list.html'
 
 class OtRequestDeleteView(LoginRequiredMixin, DeleteView):

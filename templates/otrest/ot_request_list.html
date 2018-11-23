@@ -17,6 +17,7 @@
 						<th class="center">加班日期</th>
 						<th class="center">加班原因</th>
 						<th class="center">审批状态</th>
+						<th class="center">凭证提交</th>
 						<th class="center">提交时间</th>
 						<th class="center">操作</th>
 					</tr>
@@ -34,6 +35,7 @@
                         <td class="center">{{ otrequest.ottime }}</td>
                         <td class="center">{{ otrequest.reason }}</td>
                         <td class="center">{% if otrequest.approve %}审批{% else %}未审批{% endif %}</td>
+                        <td class="center">{% if otrequest.approve %}<a href="#">提交凭证</a>{% endif %}</td>
                         <td class="center">{{ otrequest.created | date:"Y-m-d H:m:s" }}</td>
 						<td class="center">
 							<div class="hidden-sm hidden-xs action-buttons">
@@ -97,7 +99,7 @@
 			bAutoWidth: false,
 			"aoColumns": [
 			  { "bSortable": false },
-			  null, null,null, null, null,
+			  null, null,null, null, null, null,
 			  { "bSortable": false }
 			],
 			"aaSorting": [],
