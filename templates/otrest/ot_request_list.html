@@ -35,11 +35,11 @@
                         <td class="center">{{ otrequest.ottime }}</td>
                         <td class="center">{{ otrequest.reason }}</td>
                         <td class="center">{% if otrequest.approve %}审批{% else %}未审批{% endif %}</td>
-                        <td class="center">{% if otrequest.approve %}<a href="#">提交凭证</a>{% endif %}</td>
+                        <td class="center">{% if otrequest.approve %}<a href="#" onclick="upload_cert_layer()">提交凭证</a>{% endif %}</td>
                         <td class="center">{{ otrequest.created | date:"Y-m-d H:m:s" }}</td>
 						<td class="center">
 							<div class="hidden-sm hidden-xs action-buttons">
-								<a class="green" href="{% url 'otrest:detail_otrequest' otrequest.id %}">
+								<a class="green" href="#" onclick='detail_otrequest_layer("{% url 'otrest:detail_otrequest' otrequest.id %}")'>
 									<i class="ace-icon fa fa-pencil bigger-130"></i>
 								</a>
 
@@ -56,7 +56,7 @@
 
 									<ul class="dropdown-menu dropdown-only-icon dropdown-yellow dropdown-menu-right dropdown-caret dropdown-close">
 										<li>
-											<a href="{% url 'otrest:detail_otrequest' otrequest.id %}" class="tooltip-success" data-rel="tooltip" title="Edit">
+											<a href="#" onclick='detail_otrequest_layer("{% url 'otrest:detail_otrequest' otrequest.id %}")' class="tooltip-success" data-rel="tooltip" title="Edit">
 												<span class="green">
 													<i class="ace-icon fa fa-pencil-square-o bigger-120"></i>
 												</span>
@@ -89,6 +89,7 @@
 <script type="text/javascript" src="{% static 'assets/js/dataTables.buttons.min.js' %}"></script>
 <script type="text/javascript" src="{% static 'assets/js/dataTables.select.min.js' %}"></script>
 <script type="text/javascript" src="{% static 'common/js/csrf.js' %}"></script>
+<script type="text/javascript" src="{% static 'layer/layer.js' %}"></script>
 <script type="text/javascript">
 	jQuery(function($) {
 		//initiate dataTables plugin
@@ -168,6 +169,7 @@
 			e.preventDefault();
 		});
 
+        /// BEGIN: Add by SGL 删除操作
         var onDelete = function(){
             var r = confirm("确定要删除?");
             if (!r){
@@ -189,7 +191,29 @@
         }
         
         $(".del-otrequest").click(onDelete);
-
+        /// END: Add by SGL 删除操作
 	});
+
+    /// BEGIN: Add by SGL 编辑加班申请
+    function detail_otrequest_layer(url){
+	    layer.open({
+	    	title:"修改加班申请",	
+	    	area: ['650px','450px'],
+	    	type: 2,
+	    	content: url,
+	    });
+    }
+    /// END: Add by SGL 编辑加班申请
+
+    /// BEGIN: Add by SGL 上传凭证
+    function upload_cert_layer(){
+	    layer.open({
+	    	title:"上传凭证",	
+	    	area: ['650px','400px'],
+	    	type: 2,
+	    	content: "{%url 'otrest:create_otrecord' %}",
+	    });
+    }
+    /// END: Add by SGL 上传凭证
 </script>
 {% endblock %}

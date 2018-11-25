@@ -1,9 +1,10 @@
 from django.db import models
 from django.contrib.auth.models import User
 
+# Create your models here.
 class OtRequest(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='otrest_user')
-    ottime = models.DateField(blank=True, null=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='rn_OtRequestUser')
+    ottime = models.DateField(blank=True, null=False)
     reason = models.TextField(max_length=100, blank=True)
     approve = models.BooleanField(default=False)
     created = models.DateTimeField(auto_now_add=True)
@@ -14,4 +15,16 @@ class OtRequest(models.Model):
     def __str__(self):
         return 'user:{},{},{}'.format(self.user.username, self.ottime, self.reason)
 
-# Create your models here.
+class OtRecord(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='rn_OtRecordUser')
+    otrequest = models.OneToOneField(OtRequest, on_delete=models.CASCADE, unique=True) 
+    startTime = models.DateField(blank=True, null=False)
+    endTime = models.DateField(blank=True, null=False)
+    isCommit = models.BooleanField(default=False)
+    created = models.DateTimeField(auto_now_add=False)
+
+    class Meta:
+        ordering = ('-id',)
+    
+    def __str__(self):
+        return 'user:{},{},{}'.format(self.user.username, self.startTime, self.endTime)

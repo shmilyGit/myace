@@ -1,7 +1,6 @@
 {% extends "frame/base.html" %}
 {% load staticfiles %}
 {% block content %}
-<link rel="stylesheet" href="{% static 'assets/css/bootstrap-datepicker3.min.css' %}" />
 
 <div class="space-24"></div>
 <div class="row">
@@ -30,7 +29,7 @@
                                 <hr> 
 
                             	<div class="form-group">
-                            		<label class="col-sm-offset-1 col-sm-2 control-label no-padding-right" for="id_birth">加班时间:</label>
+                            		<label class="col-sm-offset-1 col-sm-2 control-label no-padding-right" for="id_ottime">加班时间:</label>
                             		<div class="col-sm-7">
                             			<div class="input-group">
                             				<input class="form-control date-picker" id="id_ottime" name="ottime" type="text" data-date-format="yyyy-mm-dd" placeholder="yyyy-mm-dd"/>
@@ -44,7 +43,7 @@
                                 <hr> 
 
                             	<div class="form-group">
-                            		<label class="col-sm-offset-1 col-sm-2 control-label no-padding-right" for="id_comment">加班事由:</label>
+                            		<label class="col-sm-offset-1 col-sm-2 control-label no-padding-right" for="id_reason">加班事由:</label>
                             		<div class="col-sm-7">
                             			<textarea class="form-control" style="resize:none" id="id_reason" name="reason"></textarea>
                             		</div>
@@ -79,17 +78,14 @@
 {% endblock %}
 
 {% block jsscript%}
-<script src="{% static 'assets/js/bootstrap-datepicker.min.js' %}"></script>
+<script src="{% static 'common/js/laydate/laydate.js' %}"></script>
 <!-- inline scripts related to this page -->
 <script type="text/javascript">
 	jQuery(function($) {
-		$('.date-picker').datepicker({
-            todayHighlight: true,
-            autoclose: true
-        })
-        .next().on(ace.click_event, function(){
-			$(this).prev().focus();
-		});
+        laydate.render({
+            elem: '#id_ottime',//指定元素
+            showBottom: false
+        });
 	});
 </script>
 {% endblock %}
