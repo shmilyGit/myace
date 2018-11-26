@@ -1,6 +1,8 @@
 {% extends "frame/base.html" %}
 {% load staticfiles %}
 {% block content %}
+
+<link rel="stylesheet" href="{% static 'layui/css/layui.css' %}" />
 <div class="row">
 	<div class="col-xs-12">
 		<div>
@@ -89,7 +91,7 @@
 <script type="text/javascript" src="{% static 'assets/js/dataTables.buttons.min.js' %}"></script>
 <script type="text/javascript" src="{% static 'assets/js/dataTables.select.min.js' %}"></script>
 <script type="text/javascript" src="{% static 'common/js/csrf.js' %}"></script>
-<script type="text/javascript" src="{% static 'layer/layer.js' %}"></script>
+<script type="text/javascript" src="{% static 'layui/layui.js' %}"></script>
 <script type="text/javascript">
 	jQuery(function($) {
 		//initiate dataTables plugin
@@ -196,23 +198,26 @@
 
     /// BEGIN: Add by SGL 编辑加班申请
     function detail_otrequest_layer(url){
-	    layer.open({
-	    	title:"修改加班申请",	
-	    	area: ['650px','450px'],
-	    	type: 2,
-	    	content: url,
-	    });
+        layui.use("layer", function(){
+            var layer = layui.layer;
+	        layer.open({
+	        	title:"修改加班申请",	
+	        	area: ['650px','450px'],
+	        	type: 2,
+	        	content: url,
+	        });
+        });
     }
     /// END: Add by SGL 编辑加班申请
 
     /// BEGIN: Add by SGL 上传凭证
     function upload_cert_layer(){
-	    layer.open({
-	    	title:"上传凭证",	
-	    	area: ['650px','400px'],
-	    	type: 2,
-	    	content: "{%url 'otrest:create_otrecord' %}",
-	    });
+	    //layer.open({
+	    //	title:"上传凭证",	
+	    //	area: ['650px','400px'],
+	    //	type: 2,
+	    //	content: "{%url 'otrest:create_otrecord' %}",
+	    //});
     }
     /// END: Add by SGL 上传凭证
 </script>
