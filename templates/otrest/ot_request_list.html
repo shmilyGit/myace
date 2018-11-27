@@ -204,7 +204,8 @@
 	        	title:"修改加班申请",	
 	        	area: ['650px','450px'],
 	        	type: 2,
-	        	content: url,
+                maxmin: true,
+	        	content: url
 	        });
         });
     }
@@ -212,12 +213,16 @@
 
     /// BEGIN: Add by SGL 上传凭证
     function upload_cert_layer(){
-	    //layer.open({
-	    //	title:"上传凭证",	
-	    //	area: ['650px','400px'],
-	    //	type: 2,
-	    //	content: "{%url 'otrest:create_otrecord' %}",
-	    //});
+        layui.use("layer", function(){
+            var layer = layui.layer;
+            layer.open({
+            	title:"上传凭证",	
+            	area: ['650px','400px'],
+            	type: 2,
+                maxmin: true,
+            	content: "{%url 'otrest:create_otrecord' %}"
+            });
+        });
     }
     /// END: Add by SGL 上传凭证
 </script>

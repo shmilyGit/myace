@@ -1,7 +1,7 @@
 {% extends "frame/base.html" %}
 {% load staticfiles %}
 {% block content %}
-<link rel="stylesheet" href="{% static 'assets/css/bootstrap-datepicker3.min.css' %}" />
+<link rel="stylesheet" href="{% static 'layui/css/layui.css' %}" />
 
 <div id="user-profile-3" class="user-profile row">
 	<div class="col-sm-offset-1 col-sm-10">
@@ -86,7 +86,7 @@
 						        		<div class="col-sm-9">
 						        			<div class="input-large">
 						        				<div class="input-group">
-						        					<input class="input-large date-picker" id="id_birth" name="birth" type="text" data-date-format="yyyy-mm-dd" placeholder="yyyy-mm-dd" value="{{ userinfo.birth | date:"Y-m-d" }}"/>
+						        					<input class="input-large date-picker" id="id_birth" name="birth" type="text" data-date-format="yyyy-mm-dd" placeholder="yyyy-mm-dd" value="{{ userinfo.birth | date:"Y-m-d" }}" readonly=""/>
 						        					<span class="input-group-addon">
 						        						<i class="ace-icon fa fa-calendar"></i>
 						        					</span>
@@ -262,27 +262,32 @@
 <script type="text/javascript"  src="{% static 'assets/js/bootstrap-datepicker.min.js' %}"></script>
 <script type="text/javascript"  src="{% static 'assets/js/jquery.hotkeys.index.min.js' %}"></script>
 <script type="text/javascript"  src="{% static 'assets/js/jquery.maskedinput.min.js' %}"></script>
-<script type="text/javascript"  src="{% static 'layer/layer.js' %}"></script>
+<script type="text/javascript" src="{% static 'layui/layui.js' %}"></script>
 <!-- inline scripts related to this page -->
 <script type="text/javascript">
 	jQuery(function($) {
 		$('.input-mask-phone').mask('999-9999-9999');
-		$('.date-picker').datepicker({
-            autoclose: true,
-            todayHighlight: true
-        })
-        .next().on(ace.click_event, function(){
-			$(this).prev().focus();
-		});
+
+        layui.use("laydate", function(){
+            var laydate= layui.laydate;
+            laydate.render({
+                elem: '#id_birth',//指定元素
+                showBottom: false,
+                trigger:'click'
+            });
+        });
 	});
 
 	function upload_image_layer(){
-		layer.open({
-			title:"Upload the picture",	
-			area: ['650px','520px'],
-			type: 2,
-			content: "{% url 'account:my_headimage' %}",
-		});
+        layui.use("layer", function(){
+            var layer = layui.layer;
+		    layer.open({
+		    	title:"Upload the picture",	
+		    	area: ['650px','520px'],
+		    	type: 2,
+		    	content: "{% url 'account:my_headimage' %}",
+		    });
+        });
 	}
 </script>
 {% endblock %}

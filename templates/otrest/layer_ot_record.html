@@ -2,6 +2,7 @@
 {% load staticfiles %}
 
 {% block layerbody %}
+<link rel="stylesheet" href="{% static 'layui/css/layui.css' %}" />
 <div class="row">
     <div class="col-xs-12">
         <form class="form-horizontal" action="{% url 'otrest:otrequest' %}" method="post">{% csrf_token %}

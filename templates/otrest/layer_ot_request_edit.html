@@ -2,6 +2,7 @@
 {% load staticfiles %}
 
 {% block layerbody %}
+<link rel="stylesheet" href="{% static 'layui/css/layui.css' %}" />
 <div class="row">
     <div class="col-xs-12">
         <form class="form-horizontal" action="{% url 'otrest:update_otrequest' otrequest.id %}" method="post">{% csrf_token %}
@@ -12,7 +13,7 @@
         		<label class="col-xs-offset-1 col-xs-2 control-label no-padding-right" for="id_ottime">加班时间:</label>
         		<div class="col-xs-7">
         			<div class="input-group">
-        				<input class="form-control date-picker" id="id_ottime" name="ottime" type="text" data-date-format="yyyy-mm-dd" placeholder="yyyy-mm-dd" value="{{otrequest.ottime | date:"Y-m-d"}}"/>
+        				<input class="form-control date-picker" id="id_ottime" name="ottime" type="text" data-date-format="yyyy-mm-dd" placeholder="yyyy-mm-dd" value="{{otrequest.ottime | date:"Y-m-d"}}" readonly=""/>
         				<span class="input-group-addon">
         					<i class="ace-icon fa fa-calendar"></i>
         				</span>
@@ -53,15 +54,19 @@
 {% endblock %}
 
 {% block jsscript %}
-<script type="text/javascript" src="{% static 'layer/layer.js' %}"></script>
-<script src="{% static 'common/js/laydate/laydate.js' %}"></script>
 <!-- inline scripts related to this page -->
+<script type="text/javascript" src="{% static 'layui/layui.js' %}"></script>
 <script type="text/javascript">
 	jQuery(function($) {
-        laydate.render({
-            elem: '#id_ottime',//指定元素
-            showBottom: false
+        layui.use("laydate", function(){
+            var laydate= layui.laydate;
+            laydate.render({
+                elem: '#id_ottime',//指定元素
+                showBottom: false,
+                trigger:'click'
+            });
         });
+
         var index = parent.layer.getFrameIndex(window.name);
 
         $('button[type=submit]').click(function(){
