@@ -15,12 +15,12 @@ from .forms import OtRequestForm, OtRecordForm
 class OtRequestCreateView(LoginRequiredMixin, CreateView):
     login_url = "/account/login/"
     fields = ['ottime', 'reason']
-    template_name = 'otrest/ot_request.html'
+    template_name = 'otrest/otrequest_create.html'
     extra_context = {'m2':'active open', 'm2s1':'active'}
 
     ##Note1 当继承的是TemplateView时使用这个
     ##def get(self, request):
-    ##    return render(request, "otrest/ot_request.html")
+    ##    return render(request, "otrest/otrequest_create.html")
     
     ##Note2 当继承的是CreateView时使用这个,功能与Note1是一样的,只是两种不同的实现方式
     queryset = OtRequest.objects.all()
@@ -43,7 +43,7 @@ class OtRequestListView(LoginRequiredMixin, ListView):
     model = OtRequest
     context_object_name = "otrequests"
     extra_context = {'m2':'active open', 'm2s2':'active'}
-    template_name = 'otrest/ot_request_list.html'
+    template_name = 'otrest/otrequest_list.html'
 
 class OtRequestDeleteView(LoginRequiredMixin, DeleteView):
     login_url = "/account/login/"
@@ -61,7 +61,7 @@ class OtRequestDeleteView(LoginRequiredMixin, DeleteView):
 
 class OtRequestDetailView(LoginRequiredMixin, DetailView):
     login_url = "/account/login/"
-    template_name = "otrest/layer_ot_request_edit.html"
+    template_name = "otrest/layer_otrequest_edit.html"
     context_object_name = "otrequest"
 
     model = OtRequest
@@ -87,13 +87,13 @@ class OtRequestUpdateView(LoginRequiredMixin, UpdateView):
 
 ## 加班凭证提交 开始
 class OtRecordCreateView(LoginRequiredMixin, TemplateView):
-    template_name = 'otrest/layer_ot_record.html'
+    template_name = 'otrest/layer_otrecord_create.html'
     login_url = "/account/login/"
     extra_context = {'m2':'active open', 'm2s3':'active'}
 
     ##Note1 当继承的是TemplateView时使用这个
     ##def get(self, request):
-    ##    return render(request, "otrest/ot_request.html")
+    ##    return render(request, "otrest/otrequest.html")
     
     ##Note2 当继承的是CreateView时使用这个,功能与Note1是一样的,只是两种不同的实现方式
     #queryset = OtRecord.objects.all()
