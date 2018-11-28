@@ -19,6 +19,9 @@ from django.conf.urls import url,include
 from django.views.generic import TemplateView
 from account import views as auth_views
 
+from django.conf import settings
+from django.conf.urls.static import static
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     url(r'^account/', include('account.urls', namespace='account')),
@@ -33,3 +36,5 @@ urlpatterns = [
 #方法二,这样可以在html模板中使用{{form.password}}
 		url('', auth_views.LoginView.as_view(template_name='account/login.html'), name="loginPage"),
 ]
+
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

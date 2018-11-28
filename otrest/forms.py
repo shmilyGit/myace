@@ -9,4 +9,4 @@ class OtRequestForm(forms.ModelForm):
 class OtRecordForm(forms.ModelForm):
     class Meta:
         model = OtRecord
-        fields = ("startTime","endTime",)
+        fields = ("startTime","endTime","certPic",)
