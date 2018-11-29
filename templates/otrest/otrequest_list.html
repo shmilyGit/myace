@@ -37,11 +37,15 @@
                         <td class="center">{{ otrequest.ottime }}</td>
                         <td class="center">{{ otrequest.reason }}</td>
                         <td class="center">{% if otrequest.approve %}审批{% else %}未审批{% endif %}</td>
-                        <td class="center">{% if otrequest.approve %}<a href="#" onclick='upload_cert_layer("{% url 'otrest:create_otrecord' %}")'>提交凭证</a>{% endif %}</td>
+                        <td class="center">
+                        {% if otrequest.approve %}
+                            <a href="#" onclick="upload_cert_layer(&quot;{% url 'otrest:create_otrecord' otrequest.id %}&quot;)" >提交凭证</a>
+                        {% endif %}
+                        </td>
                         <td class="center">{{ otrequest.created | date:"Y-m-d H:m:s" }}</td>
 						<td class="center">
 							<div class="hidden-sm hidden-xs action-buttons">
-								<a class="green" href="#" onclick='detail_otrequest_layer("{% url 'otrest:detail_otrequest' otrequest.id %}")'>
+								<a class="green" href="#" onclick="detail_otrequest_layer(&quot;{% url 'otrest:detail_otrequest' otrequest.id %}&quot;)">
 									<i class="ace-icon fa fa-pencil bigger-130"></i>
 								</a>
 
@@ -198,6 +202,7 @@
 
     /// BEGIN: Add by SGL 编辑加班申请
     function detail_otrequest_layer(url){
+        alert (url);
         layui.use("layer", function(){
             var layer = layui.layer;
 	        layer.open({
@@ -218,7 +223,7 @@
             var layer = layui.layer;
             layer.open({
             	title:"上传凭证",	
-            	area: ['650px','400px'],
+            	area: ['650px','420px'],
             	type: 2,
                 maxmin: true,
             	content: url

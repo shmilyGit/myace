@@ -26,7 +26,6 @@ class OtRequestCreateView(LoginRequiredMixin, CreateView):
     queryset = OtRequest.objects.all()
 
     def post(self, request, *args, **kwargs):
-        user = User.objects.get(username = request.user.username)
         otrequest_form = OtRequestForm(request.POST)
 
         if otrequest_form.is_valid():
@@ -40,10 +39,11 @@ class OtRequestCreateView(LoginRequiredMixin, CreateView):
 
 class OtRequestListView(LoginRequiredMixin, ListView):
     login_url = "/account/login/"
-    model = OtRequest
+    template_name = 'otrest/otrequest_list.html'
     context_object_name = "otrequests"
     extra_context = {'m2':'active open', 'm2s2':'active'}
-    template_name = 'otrest/otrequest_list.html'
+
+    model = OtRequest
 
 class OtRequestDeleteView(LoginRequiredMixin, DeleteView):
     login_url = "/account/login/"
@@ -86,28 +86,33 @@ class OtRequestUpdateView(LoginRequiredMixin, UpdateView):
 ## 加班申请 结束
 
 ## 加班凭证提交 开始
-class OtRecordCreateView(LoginRequiredMixin, TemplateView):
-    template_name = 'otrest/layer_otrecord_create.html'
+class OtRecordCreateView(LoginRequiredMixin, CreateView):
     login_url = "/account/login/"
-    extra_context = {'m2':'active open', 'm2s3':'active'}
+    template_name = 'otrest/layer_otrecord_create.html'
+    fields = ['startTime', 'endTime', 'certPic']
+    extra_context = {'m2':'active open', 'm2s2':'active'}
 
-    ##Note1 当继承的是TemplateView时使用这个
-    ##def get(self, request):
-    ##    return render(request, "otrest/otrequest.html")
-    
-    ##Note2 当继承的是CreateView时使用这个,功能与Note1是一样的,只是两种不同的实现方式
-    #queryset = OtRecord.objects.all()
+    model = OtRecord
 
-    #def post(self, request, *args, **kwargs):
-    #    user = User.objects.get(username = request.user.username)
-    #    otrequest_form = OtRequestForm(request.POST)
+    # get()里的参数必须加上 *args,**kwargs或者是url里传进来的key,可以写成 get(self, request, pk)也没错,但是不写就会报错
+    def get(self, request, *args, **kwargs):
+        return render(request, self.template_name)
 
-    #    if otrequest_form.is_valid():
-    #        form_cd = otrequest_form.cleaned_data 
-    #        new_otrequest = otrequest_form.save(commit=False)
-    #        new_otrequest.user = request.user
-    #        new_otrequest.save(form_cd)
-    #        return redirect("otrest:list_otrequest")
+    def post(self, request, *args, **kwargs):
+        otrequest_id = int(self.kwargs.get(self.pk_url_kwarg, None))
+        otrequest = OtRequest.objects.get(id = otrequest_id)  
+        
+        otrecord_form = OtRecordForm(request.POST)
+        
+        if otrecord_form.is_valid():
+            form_cd = otrecord_form.cleaned_data
 
-    #    return self.render_to_response({"form":otrequest_form})
+            new_otrecord = otrecord_form.save(commit=False)
+            new_otrecord.certPic = request.FILES.get('certPic')
+            new_otrecord.user = request.user
+            new_otrecord.otrequest = otrequest
+            new_otrecord.isCommit = True
+            new_otrecord.save(form_cd)
+
+        return redirect("otrest:list_otrequest")
 ## 加班凭证提交 结束

@@ -5,7 +5,11 @@
 <link rel="stylesheet" href="{% static 'layui/css/layui.css' %}" />
 <div class="row">
     <div class="col-xs-12">
-        <form class="form-horizontal" action="{% url 'otrest:create_otrecord' %}" method="post" enctype="multipart/form-data">{% csrf_token %}
+        <!-- form的action可以填入{\% url 'otrest:create_otrecord' otrequest.id %\} 也可以不填;
+            填的时候需要将views中的otrequest.id返回到该页面才可以,
+            可以不填是因为,这个页成是由类输出的,类自己能识别
+        -->
+        <form class="form-horizontal" action="" method="post" enctype="multipart/form-data">{% csrf_token %}
 
             <hr> 
 

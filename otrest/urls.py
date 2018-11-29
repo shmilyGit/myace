@@ -13,5 +13,5 @@ urlpatterns = [
 	url(r'^update-otrequest/(?P<pk>\d+)$', otrest_views.OtRequestUpdateView.as_view(), name="update_otrequest"),
 
     ## 加班凭证提交
-	url(r'^create-otrecord/$', otrest_views.OtRecordCreateView.as_view(), name="create_otrecord"),
+	url(r'^create-otrecord/(?P<pk>\d+)$', otrest_views.OtRecordCreateView.as_view(), name="create_otrecord")
 ]

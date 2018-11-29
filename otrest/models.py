@@ -1,4 +1,5 @@
 from django.db import models
+from django.conf import settings
 from django.contrib.auth.models import User
 
 # Create your models here.
@@ -17,7 +18,12 @@ class OtRequest(models.Model):
 
 def user_directory_path(instance, filename): 
     username = instance.user.username
-    return '/'.join([MEDIA_ROOT, "images", username, "cert", filename])
+    print ("==============================================")
+    print ("==============================================")
+    print ("==============================================")
+    
+    imagePath = '/'.join([settings.MEDIA_ROOT, "images", username, "cert", filename])
+    return imagePath
 
 class OtRecord(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='rn_OtRecordUser')
@@ -26,7 +32,7 @@ class OtRecord(models.Model):
     endTime = models.DateField(blank=True, null=False)
     isCommit = models.BooleanField(default=False)
     certPic = models.ImageField(upload_to = user_directory_path, blank=True)
-    created = models.DateTimeField(auto_now_add=False)
+    created = models.DateTimeField(auto_now_add=True)
 
     class Meta:
         ordering = ('-id',)
