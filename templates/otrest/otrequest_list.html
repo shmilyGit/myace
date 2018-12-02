@@ -2,6 +2,7 @@
 {% load staticfiles %}
 {% block content %}
 
+<link rel="stylesheet" href="{% static 'layui/css/layui.css' %}" />
 <div class="row">
 	<div class="col-xs-12">
 		<div>
@@ -49,7 +50,7 @@
 						<td class="center">
 							<div class="hidden-sm hidden-xs action-buttons">
                                 {% if otrequest.approve %}
-								    <a class="grey" href="#">
+								    <a class="grey" href="#" title="不可编辑">
                                 {% else %}
 								    <a class="green" href="#" onclick="detail_otrequest_layer(&quot;{% url 'otrest:detail_otrequest' otrequest.id %}&quot;)">
                                 {% endif %}
@@ -70,7 +71,7 @@
 									<ul class="dropdown-menu dropdown-only-icon dropdown-yellow dropdown-menu-right dropdown-caret dropdown-close">
 										<li>
                                             {% if otrequest.approve %}
-								                <a class="grey" href="#">
+								                <a class="grey" href="#" title="不可编辑">
                                             {% else %}
 											<a href="#" onclick='detail_otrequest_layer("{% url 'otrest:detail_otrequest' otrequest.id %}")' class="tooltip-success" data-rel="tooltip" title="Edit">
                                             {% endif %}
@@ -232,7 +233,7 @@
             var layer = layui.layer;
             layer.open({
             	title:"上传凭证",	
-            	area: ['650px','420px'],
+            	area: ['650px','450px'],
             	type: 2,
                 maxmin: true,
             	content: url

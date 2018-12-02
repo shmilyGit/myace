@@ -4,7 +4,7 @@ from django.views.generic import CreateView, ListView, DeleteView, UpdateView, D
 from django.views.generic.base import TemplateView
 from django.contrib.auth.models import User
 from django.urls import reverse_lazy
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 import json
 
 from .models import OtRequest, OtRecord
@@ -94,8 +94,9 @@ class OtRequestUpdateView(LoginRequiredMixin, UpdateView):
     success_url = reverse_lazy("otrest:list_otrequest")
     form_class = OtRequestForm
 ## 加班申请 结束
+## ==================================================================================================
 
-## 加班凭证提交 开始
+## 加班凭证 开始
 class OtRecordCreateView(LoginRequiredMixin, CreateView):
     login_url = "/account/login/"
     template_name = 'otrest/layer_otrecord_create.html'
@@ -125,4 +126,41 @@ class OtRecordCreateView(LoginRequiredMixin, CreateView):
             new_otrecord.save(form_cd)
 
         return redirect("otrest:list_otrequest")
-## 加班凭证提交 结束
+
+class OtRecordShowView(LoginRequiredMixin, TemplateView):
+    login_url = "/account/login/"
+    template_name = 'otrest/otrecord_list.html'
+    extra_context = {'m2':'active open', 'm2s3':'active'}
+
+    def get(self, request):
+        return render(request, self.template_name, self.extra_context)
+
+class OtRecordListView(LoginRequiredMixin, TemplateView):
+    login_url = "/account/login/"
+    template_name = 'otrest/otrecord_list.html'
+    extra_context = {'m2':'active open', 'm2s3':'active'}
+
+    def get(self, request, *args, **kwargs):
+        dict = []
+        resultdict = {}
+
+        otrecords = OtRecord.objects.filter(user = self.request.user)
+
+        for r in otrecords:
+            dic = {}
+            dic['id'] = r.id
+            dic['startTime'] = r.startTime
+            dic['endTime'] = r.endTime
+            dic['certPic'] = r.certPic.name
+            print (dic)
+            dict.append(dic)
+
+        resultdict['code'] = 0
+        resultdict['msg'] = ""
+        resultdict['count'] = otrecords.count()
+        resultdict['data'] = dict
+
+        return JsonResponse(resultdict, safe=False) 
+
+
+## 加班凭证 结束

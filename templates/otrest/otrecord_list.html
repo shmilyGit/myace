@@ -1,0 +1,79 @@
+{% extends "frame/base.html" %}
+{% load staticfiles %}
+{% block content %}
+
+<link rel="stylesheet" href="{% static 'layui/css/layui.css' %}" />
+<div class="row">
+	<div class="col-xs-12">
+		<div>
+			<table id="otrecord-list-table" lay-filter="test"></table>
+		</div>
+	</div>
+</div>
+{% endblock %}
+
+{% block jsscript%}
+<script type="text/javascript" src="{% static 'assets/js/jquery.dataTables.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'assets/js/jquery.dataTables.bootstrap.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'assets/js/dataTables.buttons.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'assets/js/dataTables.select.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'common/js/csrf.js' %}"></script>
+<script type="text/javascript" src="{% static 'layui/layui.js' %}"></script>
+<script type="text/javascript">
+	jQuery(function($) {
+        layui.use("table", function(){
+            var table = layui.table;
+            table.render({
+                elem: '#otrecord-list-table', 
+                    height: 'full-220',
+                    url: "{% url 'otrest:list_otrecord' %}", //数据接口
+                    page: true, //开启分页
+                    cols: [[ //表头
+                    {field: 'id', title: 'ID', width:80, sort: true, fixed: 'left'},
+                    {field: 'startTime', title: '开始时间', width:120},
+                    {field: 'endTime', title: '结束时间', width:120, sort: true},
+                    {field: 'certPic', title: '凭证', width:400} 
+                ]]
+            });  
+            
+        });
+        /// BEGIN: Add by SGL 删除操作
+        var onDelete = function(){
+            var r = confirm("确定要删除?");
+            if (!r){
+                return false;
+            }
+
+            $.post(this.href, function(data){
+                if (data.result == "ok"){
+                    window.location.reload();
+                }else {
+                    alert ("删除失败.");
+                }
+            }).fail(function(){
+                alert("删除出错.");
+            });
+
+            return false;
+        }
+        
+        /// END: Add by SGL 删除操作
+	});
+
+    /// BEGIN: Add by SGL 编辑加班申请
+    function detail_otrecord_layer(url){
+        layui.use("layer", function(){
+            var layer = layui.layer;
+	        layer.open({
+	        	title:"修改加班申请",	
+	        	area: ['650px','450px'],
+	        	type: 2,
+                maxmin: true,
+	        	content: url
+	        });
+        });
+    }
+    /// END: Add by SGL 编辑加班申请
+
+</script>
+{% endblock %}
