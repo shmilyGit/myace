@@ -2,7 +2,6 @@
 {% load staticfiles %}
 {% block content %}
 
-<link rel="stylesheet" href="{% static 'layui/css/layui.css' %}" />
 <div class="row">
 	<div class="col-xs-12">
 		<div>
@@ -36,18 +35,26 @@
                         <td class="center">{{ forloop.counter }}</td>
                         <td class="center">{{ otrequest.ottime }}</td>
                         <td class="center">{{ otrequest.reason }}</td>
-                        <td class="center">{% if otrequest.approve %}审批{% else %}未审批{% endif %}</td>
+                        <td class="center">{% if otrequest.approve %}已审批{% else %}未审批{% endif %}</td>
                         <td class="center">
                         {% if otrequest.approve %}
+                            {% if otrequest.rn_OtRequest.isCommit%}
+                            <span>已提交</span>
+                            {% else %}
                             <a href="#" onclick="upload_cert_layer(&quot;{% url 'otrest:create_otrecord' otrequest.id %}&quot;)" >提交凭证</a>
+                            {% endif %}
                         {% endif %}
                         </td>
                         <td class="center">{{ otrequest.created | date:"Y-m-d H:m:s" }}</td>
 						<td class="center">
 							<div class="hidden-sm hidden-xs action-buttons">
-								<a class="green" href="#" onclick="detail_otrequest_layer(&quot;{% url 'otrest:detail_otrequest' otrequest.id %}&quot;)">
-									<i class="ace-icon fa fa-pencil bigger-130"></i>
-								</a>
+                                {% if otrequest.approve %}
+								    <a class="grey" href="#">
+                                {% else %}
+								    <a class="green" href="#" onclick="detail_otrequest_layer(&quot;{% url 'otrest:detail_otrequest' otrequest.id %}&quot;)">
+                                {% endif %}
+								    	<i class="ace-icon fa fa-pencil bigger-130"></i>
+								    </a>
 
 								<a class="red del-otrequest" href="{% url 'otrest:delete_otrequest' otrequest.id %}">
 									<i class="ace-icon fa fa-trash-o bigger-130"></i>
@@ -62,7 +69,11 @@
 
 									<ul class="dropdown-menu dropdown-only-icon dropdown-yellow dropdown-menu-right dropdown-caret dropdown-close">
 										<li>
+                                            {% if otrequest.approve %}
+								                <a class="grey" href="#">
+                                            {% else %}
 											<a href="#" onclick='detail_otrequest_layer("{% url 'otrest:detail_otrequest' otrequest.id %}")' class="tooltip-success" data-rel="tooltip" title="Edit">
+                                            {% endif %}
 												<span class="green">
 													<i class="ace-icon fa fa-pencil-square-o bigger-120"></i>
 												</span>
@@ -202,7 +213,6 @@
 
     /// BEGIN: Add by SGL 编辑加班申请
     function detail_otrequest_layer(url){
-        alert (url);
         layui.use("layer", function(){
             var layer = layui.layer;
 	        layer.open({
@@ -218,7 +228,6 @@
 
     /// BEGIN: Add by SGL 上传凭证
     function upload_cert_layer(url){
-        
         layui.use("layer", function(){
             var layer = layui.layer;
             layer.open({

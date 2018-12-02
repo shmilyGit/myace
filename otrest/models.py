@@ -18,16 +18,15 @@ class OtRequest(models.Model):
 
 def user_directory_path(instance, filename): 
     username = instance.user.username
-    print ("==============================================")
-    print ("==============================================")
-    print ("==============================================")
+    print ("==============================================mode-instance:", instance)
+    print ("==============================================mode-filename:", filename)
     
     imagePath = '/'.join([settings.MEDIA_ROOT, "images", username, "cert", filename])
     return imagePath
 
 class OtRecord(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='rn_OtRecordUser')
-    otrequest = models.OneToOneField(OtRequest, on_delete=models.CASCADE, unique=True) 
+    otrequest = models.OneToOneField(OtRequest, on_delete=models.CASCADE, unique=True, related_name='rn_OtRequest') 
     startTime = models.DateField(blank=True, null=False)
     endTime = models.DateField(blank=True, null=False)
     isCommit = models.BooleanField(default=False)

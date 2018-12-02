@@ -43,7 +43,17 @@ class OtRequestListView(LoginRequiredMixin, ListView):
     context_object_name = "otrequests"
     extra_context = {'m2':'active open', 'm2s2':'active'}
 
-    model = OtRequest
+    ##方法一
+    #model = OtRequest
+
+    #def get_queryset(self):
+    #    qs = super(OtRequestListView, self).get_queryset()
+    #    return qs.filter(user = self.request.user)
+
+    ##方法二 
+    def get_queryset(self):
+        return OtRequest.objects.filter(user = self.request.user)
+
 
 class OtRequestDeleteView(LoginRequiredMixin, DeleteView):
     login_url = "/account/login/"
@@ -105,10 +115,10 @@ class OtRecordCreateView(LoginRequiredMixin, CreateView):
         otrecord_form = OtRecordForm(request.POST)
         
         if otrecord_form.is_valid():
+            print ("==============================", request.POST)
             form_cd = otrecord_form.cleaned_data
-
             new_otrecord = otrecord_form.save(commit=False)
-            new_otrecord.certPic = request.FILES.get('certPic')
+            new_otrecord.certPic = request.FILES.get('certPic', None)
             new_otrecord.user = request.user
             new_otrecord.otrequest = otrequest
             new_otrecord.isCommit = True
