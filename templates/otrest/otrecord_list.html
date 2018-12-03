@@ -19,23 +19,43 @@
 <script type="text/javascript" src="{% static 'assets/js/dataTables.select.min.js' %}"></script>
 <script type="text/javascript" src="{% static 'common/js/csrf.js' %}"></script>
 <script type="text/javascript" src="{% static 'layui/layui.js' %}"></script>
+
+<script type="text/html" id="barOper">
+  <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+  <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+</script>
+
 <script type="text/javascript">
 	jQuery(function($) {
-        layui.use("table", function(){
-            var table = layui.table;
+        layui.use(['laypage', 'table', 'layer'], function(){
+            var laypage = layui.laypage,
+                table = layui.table,
+                layer = layui.layer;
+    
             table.render({
                 elem: '#otrecord-list-table', 
-                    height: 'full-220',
-                    url: "{% url 'otrest:list_otrecord' %}", //数据接口
-                    page: true, //开启分页
-                    cols: [[ //表头
-                    {field: 'id', title: 'ID', width:80, sort: true, fixed: 'left'},
-                    {field: 'startTime', title: '开始时间', width:120},
-                    {field: 'endTime', title: '结束时间', width:120, sort: true},
-                    {field: 'certPic', title: '凭证', width:400} 
+                method: 'post',
+                url: "{% url 'otrest:list_otrecord' %}", //数据接口
+                height: '420',
+                page: true, //开启分页
+                limit: 10,
+                cols: [[ //表头
+                    {type:'numbers', title: '序号', width: 80, align:'center'},
+                    //{field: 'id', title: 'ID', width: 70, sort: true, fixed: 'left', align: 'center'},
+                    {field: 'startTime', title: '开始时间', align:'center', sort: true},
+                    {field: 'endTime', title: '结束时间', align:'center', sort: true},
+                    {field: 'otHours', title: '加班时长', align:'center', sort: true},
+                    {field: 'certPic', title: '凭证', align:'center'},
+                    {field: 'isConfirm', title: '确认', align:'center'},
+                    {field: 'created', title: '提交时间', align:'center', sort: true},
+                    {fixed: 'right', title: '操作', toolbar: '#barOper', align:'center', width:150}
                 ]]
             });  
-            
+
+            laypage.render({
+                elem: '#otrecord-list-table',
+                count: 30
+            });
         });
         /// BEGIN: Add by SGL 删除操作
         var onDelete = function(){

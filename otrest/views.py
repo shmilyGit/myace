@@ -140,11 +140,23 @@ class OtRecordListView(LoginRequiredMixin, TemplateView):
     template_name = 'otrest/otrecord_list.html'
     extra_context = {'m2':'active open', 'm2s3':'active'}
 
-    def get(self, request, *args, **kwargs):
-        dict = []
-        resultdict = {}
+    def post(self, request, *args, **kwargs):
+        page = request.POST.get('page')
+        rows = request.POST.get('limit')
+        print ("=========================================================00")
+        print (request.POST)
+        print ("=========================================================11")
+
+        i = (int(page) - 1) * int(rows)
+        j = (int(page) - 1) * int(rows) + int(rows)
 
         otrecords = OtRecord.objects.filter(user = self.request.user)
+        total = otrecords.count()
+
+        otrecords = otrecords[i:j]
+
+        dict = []
+        resultdict = {}
 
         for r in otrecords:
             dic = {}
@@ -152,12 +164,12 @@ class OtRecordListView(LoginRequiredMixin, TemplateView):
             dic['startTime'] = r.startTime
             dic['endTime'] = r.endTime
             dic['certPic'] = r.certPic.name
-            print (dic)
+            dic['created'] = r.created.strftime("%Y-%m-%d %H:%M:%S")
             dict.append(dic)
 
         resultdict['code'] = 0
         resultdict['msg'] = ""
-        resultdict['count'] = otrecords.count()
+        resultdict['count'] = total 
         resultdict['data'] = dict
 
         return JsonResponse(resultdict, safe=False) 
