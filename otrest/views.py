@@ -5,6 +5,7 @@ from django.views.generic.base import TemplateView
 from django.contrib.auth.models import User
 from django.urls import reverse_lazy
 from django.http import HttpResponse, JsonResponse
+from django.core.exceptions import ObjectDoesNotExist
 import json
 
 from .models import OtRequest, OtRecord
@@ -37,22 +38,58 @@ class OtRequestCreateView(LoginRequiredMixin, CreateView):
 
         return self.render_to_response({"form":otrequest_form})
 
-class OtRequestListView(LoginRequiredMixin, ListView):
+class OtRequestListView(LoginRequiredMixin, TemplateView):
     login_url = "/account/login/"
     template_name = 'otrest/otrequest_list.html'
-    context_object_name = "otrequests"
     extra_context = {'m2':'active open', 'm2s2':'active'}
 
-    ##方法一
-    #model = OtRequest
+    def get(self, request):
+        return render(request, self.template_name, self.extra_context)
 
-    #def get_queryset(self):
-    #    qs = super(OtRequestListView, self).get_queryset()
-    #    return qs.filter(user = self.request.user)
+    def post(self, request, *args, **kwargs):
+        page = request.POST.get('page')
+        rows = request.POST.get('limit')
+        print ("=========================================================00")
+        print (request.POST)
+        print ("=========================================================11")
 
-    ##方法二 
-    def get_queryset(self):
-        return OtRequest.objects.filter(user = self.request.user)
+        i = (int(page) - 1) * int(rows)
+        j = (int(page) - 1) * int(rows) + int(rows)
+
+        otrequests = OtRequest.objects.filter(user = self.request.user)
+        total = otrequests.count()
+
+        otrequests = otrequests[i:j]
+
+        dict = []
+        resultdict = {}
+
+        for tmp in otrequests:
+            dic = {}
+            dic['id'] = tmp.id
+            dic['ottime'] = tmp.ottime
+            dic['reason'] = tmp.reason
+            dic['approve'] = tmp.approve
+            dic['created'] = tmp.created.strftime("%Y-%m-%d %H:%M:%S")
+
+            try:
+                otrequestObj = OtRecord.objects.get(otrequest = tmp.id) 
+                if otrequestObj:  
+                    dic['isCommit'] = True
+            except ObjectDoesNotExist:
+                dic['isCommit'] = False
+                if tmp.approve:
+                    dic['commitUrl'] = "/otrest/create-otrecord/"
+
+            print (dic)
+            dict.append(dic)
+
+        resultdict['code'] = 0
+        resultdict['msg'] = ""
+        resultdict['count'] = total 
+        resultdict['data'] = dict
+
+        return JsonResponse(resultdict, safe=False) 
 
 
 class OtRequestDeleteView(LoginRequiredMixin, DeleteView):
@@ -127,18 +164,14 @@ class OtRecordCreateView(LoginRequiredMixin, CreateView):
 
         return redirect("otrest:list_otrequest")
 
-class OtRecordShowView(LoginRequiredMixin, TemplateView):
+
+class OtRecordListView(LoginRequiredMixin, TemplateView):
     login_url = "/account/login/"
     template_name = 'otrest/otrecord_list.html'
     extra_context = {'m2':'active open', 'm2s3':'active'}
 
     def get(self, request):
         return render(request, self.template_name, self.extra_context)
-
-class OtRecordListView(LoginRequiredMixin, TemplateView):
-    login_url = "/account/login/"
-    template_name = 'otrest/otrecord_list.html'
-    extra_context = {'m2':'active open', 'm2s3':'active'}
 
     def post(self, request, *args, **kwargs):
         page = request.POST.get('page')

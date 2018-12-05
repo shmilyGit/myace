@@ -27,10 +27,8 @@
 
 <script type="text/javascript">
 	jQuery(function($) {
-        layui.use(['laypage', 'table', 'layer'], function(){
-            var laypage = layui.laypage,
-                table = layui.table,
-                layer = layui.layer;
+        layui.use(['table'], function(){
+            var table = layui.table;
     
             table.render({
                 elem: '#otrecord-list-table', 
@@ -40,23 +38,19 @@
                 page: true, //开启分页
                 limit: 10,
                 cols: [[ //表头
-                    {type:'numbers', title: '序号', width: 80, align:'center'},
+                    {type:'numbers', title: '序号', width: 100, align:'center'},
                     //{field: 'id', title: 'ID', width: 70, sort: true, fixed: 'left', align: 'center'},
                     {field: 'startTime', title: '开始时间', align:'center', sort: true},
                     {field: 'endTime', title: '结束时间', align:'center', sort: true},
                     {field: 'otHours', title: '加班时长', align:'center', sort: true},
                     {field: 'certPic', title: '凭证', align:'center'},
                     {field: 'isConfirm', title: '确认', align:'center'},
-                    {field: 'created', title: '提交时间', align:'center', sort: true},
+                    {field: 'created', title: '操作时间', width: 200, align:'center', sort: true},
                     {title: '操作', toolbar: '#barOper', align:'center', width:150}
                 ]]
             });  
-
-            laypage.render({
-                elem: '#otrecord-list-table',
-                count: 30
-            });
         });
+
         /// BEGIN: Add by SGL 删除操作
         var onDelete = function(){
             var r = confirm("确定要删除?");
