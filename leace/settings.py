@@ -128,7 +128,7 @@ STATICFILES_DIRS = ( #项目相对目录
 
 #多媒体目录[图片/文件/音视频]
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, "media/")
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
 
 #请看leace/urls.py配置

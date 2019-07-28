@@ -10,6 +10,7 @@ import json
 
 from .models import OtRequest, OtRecord
 from .forms import OtRequestForm, OtRecordForm
+from django.conf import settings
 
 # Create your views here.
 ## 加班申请 开始
@@ -49,9 +50,6 @@ class OtRequestListView(LoginRequiredMixin, TemplateView):
     def post(self, request, *args, **kwargs):
         page = request.POST.get('page')
         rows = request.POST.get('limit')
-        print ("=========================================================00")
-        print (request.POST)
-        print ("=========================================================11")
 
         i = (int(page) - 1) * int(rows)
         j = (int(page) - 1) * int(rows) + int(rows)
@@ -81,7 +79,6 @@ class OtRequestListView(LoginRequiredMixin, TemplateView):
                 if tmp.approve:
                     dic['commitUrl'] = "/otrest/create-otrecord/"
 
-            print (dic)
             dict.append(dic)
 
         resultdict['code'] = 0
@@ -153,7 +150,6 @@ class OtRecordCreateView(LoginRequiredMixin, CreateView):
         otrecord_form = OtRecordForm(request.POST)
         
         if otrecord_form.is_valid():
-            print ("==============================", request.POST)
             form_cd = otrecord_form.cleaned_data
             new_otrecord = otrecord_form.save(commit=False)
             new_otrecord.certPic = request.FILES.get('certPic', None)
@@ -176,9 +172,6 @@ class OtRecordListView(LoginRequiredMixin, TemplateView):
     def post(self, request, *args, **kwargs):
         page = request.POST.get('page')
         rows = request.POST.get('limit')
-        print ("=========================================================00")
-        print (request.POST)
-        print ("=========================================================11")
 
         i = (int(page) - 1) * int(rows)
         j = (int(page) - 1) * int(rows) + int(rows)
@@ -206,6 +199,5 @@ class OtRecordListView(LoginRequiredMixin, TemplateView):
         resultdict['data'] = dict
 
         return JsonResponse(resultdict, safe=False) 
-
 
 ## 加班凭证 结束

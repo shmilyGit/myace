@@ -17,7 +17,7 @@
 
 7.编写登录与修改密码功能
     > 基于函数视图FBV 下函数执行完要跳转的XX模板的话,传参数为 {"post_reset_redirect":"/URI/XX/"}
-    > 基于类视图FCV 下函数执行完要跳转的XX模板的话,传参数为(success_url='/URI/XX/')
+    > 基于类视图CBV 下函数执行完要跳转的XX模板的话,传参数为(success_url='/URI/XX/')
 
 8.编写重置密码功能
     > 完善重置密码后的展示页面
@@ -35,3 +35,5 @@
     > 查看版本记录 templetes/test/user_profile.html
 
 13. session 的简单使用
+
+14. 如果views.py中处理表单时报错,可以使用 print ("------------------------------------------->5:", form.errors)将出错信息打出来(坑的我好苦啊)

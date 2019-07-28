@@ -17,20 +17,18 @@ class OtRequest(models.Model):
         return 'user:{},{},{}'.format(self.user.username, self.ottime, self.reason)
 
 def user_directory_path(instance, filename): 
-    username = instance.user.username
-    print ("==============================================mode-instance:", instance)
-    print ("==============================================mode-filename:", filename)
-    
-    imagePath = '/'.join([settings.MEDIA_ROOT, "images", username, "cert", filename])
+    ## 保存的路径最好不要使用用户名,可以使用用户id,为了安全
+    relativePath = "images/user_{0}/{1}".format(instance.user.id, filename) 
+    imagePath = '/'.join([settings.MEDIA_ROOT, relativePath])
     return imagePath
 
 class OtRecord(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='rn_OtRecordUser')
     otrequest = models.OneToOneField(OtRequest, on_delete=models.CASCADE, unique=True, related_name='rn_OtRequest') 
-    startTime = models.DateField(blank=True, null=False)
-    endTime = models.DateField(blank=True, null=False)
+    startTime = models.DateTimeField(blank=True, null=False)
+    endTime = models.DateTimeField(blank=True, null=False)
     isCommit = models.BooleanField(default=False)
-    certPic = models.ImageField(upload_to = user_directory_path, blank=True)
+    certPic = models.FileField(upload_to=user_directory_path, blank=True)
     created = models.DateTimeField(auto_now_add=True)
 
     class Meta:
