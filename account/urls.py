@@ -17,7 +17,7 @@ urlpatterns = [
 	path('register/', auth_views.RegistrationView.as_view(), name="user_register"),
 
     ##基本信息修改
-	re_path(r'^user-profile/(?P<tab>[-\d])/$', auth_views.UserProfileView.as_view(), name="user_profile"),
+	re_path(r'^user-profile/(?P<tab>[1,2])/$', auth_views.UserProfileView.as_view(), name="user_profile"),
 	path('save-userinfo/', auth_views.UserProfileView.as_view(), name="save_userinfo"),
 	path('my-headimage/', auth_views.MineHeadImage.as_view(), name="my_headimage"),
 

@@ -269,15 +269,15 @@
 
 				<li class="light-blue dropdown-modal">
 					<a data-toggle="dropdown" href="#" class="dropdown-toggle">
-                        {% if user.userinfo.photo %}
-						<img class="nav-user-photo" src="{{ user.userinfo.photo | striptags }}" alt="Your's Photo" />
+                        {% if user.rn_UserInfo.photo %}
+						<img class="nav-user-photo" src="{{ user.rn_UserInfo.photo | striptags }}" alt="Your's Photo" />
                         {% else %}
 						<img class="nav-user-photo" src="{% static 'images/wolf.jpg' %}" alt="Your's Photo" />
                         {% endif %}
 						<span class="user-info">
 							<small>Welcome</small>
 							{% if user.is_authenticated%}
-								{{ user.username }}
+								{{ user.username}}
 							{% endif %}
 						</span>
 
