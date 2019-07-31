@@ -28,7 +28,7 @@ class OtRecord(models.Model):
     startTime = models.DateTimeField(blank=True, null=False)
     endTime = models.DateTimeField(blank=True, null=False)
     isCommit = models.BooleanField(default=False)
-    certPic = models.FileField(upload_to=user_directory_path, blank=True)
+    certPic = models.ImageField(upload_to=user_directory_path, blank=True)
     created = models.DateTimeField(auto_now_add=True)
 
     class Meta:

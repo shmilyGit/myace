@@ -14,27 +14,30 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path,re_path
 from django.conf.urls import url,include
 from django.views.generic import TemplateView
 from account import views as auth_views
 
 from django.conf import settings
 from django.conf.urls.static import static
+from django.views.static import serve
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    url(r'^account/', include('account.urls', namespace='account')),
-    url(r'^otrest/', include('otrest.urls', namespace='otrest')),
+    path('account/', include('account.urls', namespace='account')),
+    path('otrest/', include('otrest.urls', namespace='otrest')),
 
 #登录之后跳转到该页,该页即首页
-    url(r'^index/', auth_views.IndexPageView.as_view(), name='show_index'),
+    path('index/', auth_views.IndexPageView.as_view(), name='show_index'),
 
 #直接访问IP:port 后边不用加路径, 即http://192.168.5.105:8000就会跳转到login.html
 #方法一,这样不会在html模板中使用{{form.password}}
-		#url('', TemplateView.as_view(template_name="account/login.html"), name='loginPage'),
+	#url('', TemplateView.as_view(template_name="account/login.html"), name='loginPage'),
 #方法二,这样可以在html模板中使用{{form.password}}
-		url('', auth_views.LoginView.as_view(template_name='account/login.html'), name="loginPage"),
+	path('', auth_views.LoginView.as_view(template_name='account/login.html'), name="loginPage"),
+    re_path(r'media/(?P<path>.*)$',serve,{'document_root':settings.MEDIA_ROOT}),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+

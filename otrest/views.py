@@ -187,8 +187,8 @@ class OtRecordListView(LoginRequiredMixin, TemplateView):
         for r in otrecords:
             dic = {}
             dic['id'] = r.id
-            dic['startTime'] = r.startTime
-            dic['endTime'] = r.endTime
+            dic['startTime'] = r.startTime.strftime("%Y-%m-%d %H:%M:%S")
+            dic['endTime'] = r.endTime.strftime("%Y-%m-%d %H:%M:%S")
             dic['certPic'] = r.certPic.name
             dic['created'] = r.created.strftime("%Y-%m-%d %H:%M:%S")
             dict.append(dic)

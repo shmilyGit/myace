@@ -34,7 +34,7 @@
                 elem: '#otrecord-list-table', 
                 method: 'post',
                 url: "{% url 'otrest:list_otrecord' %}", //数据接口
-                height: '420',
+                height: 'full-215',
                 page: true, //开启分页
                 limit: 10,
                 cols: [[ //表头
@@ -43,7 +43,12 @@
                     {field: 'startTime', title: '开始时间', align:'center', sort: true},
                     {field: 'endTime', title: '结束时间', align:'center', sort: true},
                     {field: 'otHours', title: '加班时长', align:'center', sort: true},
-                    {field: 'certPic', title: '凭证', align:'center'},
+                    //{field: 'certPic', title: '凭证', align:'center'},
+                    {field: 'certPic', title: '凭证', align:'center',
+                        templet: function(d){
+                            return '<div><img src="' +d.certPic +'"></div>'
+                        }
+                    },
                     {field: 'isConfirm', title: '确认', align:'center'},
                     {field: 'created', title: '操作时间', width: 200, align:'center', sort: true},
                     {title: '操作', toolbar: '#barOper', align:'center', width:150}

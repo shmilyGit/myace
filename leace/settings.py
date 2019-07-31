@@ -62,6 +62,7 @@ TEMPLATES = [
             'context_processors': [
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
+                'django.template.context_processors.media',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
             ],
@@ -133,11 +134,12 @@ MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
 #请看leace/urls.py配置
 LOGIN_REDIRECT_URL = '/index/'
+LOGIN_URL = '/account/login/'
 
 #密码重置时发送邮件使用的,个人理解也可以用在所有需要发邮件的地方
 EMAIL_HOST = 'smtp.qq.com'
 EMAIL_HOST_USER = "643492281@qq.com"
-EMAIL_HOST_PASSWORD = "work??00"
+EMAIL_HOST_PASSWORD = ""
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 DEFAULT_FROM_EAMIL = "718922628@qq.com"
