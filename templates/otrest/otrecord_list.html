@@ -13,12 +13,15 @@
 {% endblock %}
 
 {% block jsscript%}
+<script type="text/javascript" src="{% static 'layui/layui.js' %}"></script>
+<script type="text/javascript" src="{% static 'common/js/csrf.js' %}"></script>
 <script type="text/javascript" src="{% static 'assets/js/jquery.dataTables.min.js' %}"></script>
 <script type="text/javascript" src="{% static 'assets/js/jquery.dataTables.bootstrap.min.js' %}"></script>
 <script type="text/javascript" src="{% static 'assets/js/dataTables.buttons.min.js' %}"></script>
 <script type="text/javascript" src="{% static 'assets/js/dataTables.select.min.js' %}"></script>
-<script type="text/javascript" src="{% static 'common/js/csrf.js' %}"></script>
-<script type="text/javascript" src="{% static 'layui/layui.js' %}"></script>
+<script type="text/javascript" src="{% static 'common/js/jquery.mousewheel.js' %}"></script>
+<script type="text/javascript" src="{% static 'common/js/jquery.imgZoom.js' %}"></script>
+<script type="text/javascript" src="{% static 'common/js/jquery.drag.js' %}"></script>
 
 <script type="text/html" id="barOper">
   <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
@@ -27,6 +30,7 @@
 
 <script type="text/javascript">
 	jQuery(function($) {
+        $(".imgZoom").imgZoom();
         layui.use(['table'], function(){
             var table = layui.table;
     
@@ -46,7 +50,8 @@
                     //{field: 'certPic', title: '凭证', align:'center'},
                     {field: 'certPic', title: '凭证', align:'center',
                         templet: function(d){
-                            return '<div><img src="' +d.certPic +'"></div>'
+                            //return '<div><img clas=".imgZoom" src="' +d.thumbCertPic+ '" data-src="' +d.certPic+'"></div>'
+                            return '<div><img clas=".imgZoom" src="' +d.certPic+ '"></div>'
                         }
                     },
                     {field: 'isConfirm', title: '确认', align:'center'},

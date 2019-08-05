@@ -34,6 +34,7 @@ class OtRequestCreateView(LoginRequiredMixin, CreateView):
             form_cd = otrequest_form.cleaned_data 
             new_otrequest = otrequest_form.save(commit=False)
             new_otrequest.user = request.user
+            new_otrequest.approve = True 
             new_otrequest.save(form_cd)
             return redirect("otrest:list_otrequest")
 
@@ -190,6 +191,7 @@ class OtRecordListView(LoginRequiredMixin, TemplateView):
             dic['startTime'] = r.startTime.strftime("%Y-%m-%d %H:%M:%S")
             dic['endTime'] = r.endTime.strftime("%Y-%m-%d %H:%M:%S")
             dic['certPic'] = r.certPic.name
+            dic['thumbCertPic'] = r.thumbCertPic.name
             dic['created'] = r.created.strftime("%Y-%m-%d %H:%M:%S")
             dict.append(dic)
 
